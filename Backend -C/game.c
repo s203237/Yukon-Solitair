@@ -87,6 +87,16 @@ deck = newDeck;
 
 }
 void showDeck(){
+  Card* current = deck;
+  while(current != NULL){
+    if(current -> faceUp) {
+      printf("%c%c", current -> rank, current -> suit); // prints faceUp cards
+      } else {
+        printf("[] "); // prints faceDown cards
+  }
+  current = current -> next;
+  }
+  printf("\n");
 
 }
 void suffleDeckSplit(int split){
