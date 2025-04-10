@@ -86,6 +86,47 @@ current = next;
 deck = newDeck;
 
 }
+void suffleDeckSplit(int split){
+  if(!deck || split == 0) return;
+
+  //Split the deck into two parts
+  Card* firstHalf = deck;
+  Card* secondHalf = NULL;
+  Card* current = deck;
+  Card* prev = NULL;
+
+  int count = 0;
+  while (current !NULL && count < split) {
+    prev = current;
+    current = current -> next;
+    count++;
+  }
+
+  if (prev !NULL) {
+    prev -> next = NULL;
+    }
+    secondHalf = current;
+
+    //Interleave cards from both hslves
+    Card* shuffled = NULL;
+    Card** tail = &sheffled;
+
+    while(firstHalf != NULL || secondHalf != NULL){
+      if(firstHalf != NULL){
+        *tail = firstHalf;
+        tail = &firstHalf->next;
+        firstHalf = *tail;
+      }
+      if(secondHalf != NULL){
+        *tail = secondHalf;
+        tail = &secondHalf->next;
+        secondHalf = *tail;
+      }
+    }
+    deck = shuffled;
+
+
+}
 void showDeck(){
   Card* current = deck;
   while(current != NULL){
@@ -99,9 +140,7 @@ void showDeck(){
   printf("\n");
 
 }
-void suffleDeckSplit(int split){
 
-}
 
 void DealCards(){
 
