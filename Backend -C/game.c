@@ -39,8 +39,49 @@ bool loadDeckFromFile(const char*filename){
     fclose(file);
     return count ==52;
 }
+//Simple seed-based pseudo-random generator
+static int seed = 47;
+int my_random() {
+    seed = (seed * 73 + 17) % 1007; //simple but sufficient for basic shuffling
+    return seed;
+}
 
 void shuffleDeckRandom(){
+if (!deck) return;
+
+Card* newDeck = NULL; // the shuffled deck
+Card* current = deck;
+deck = NULL;  // empty the original deck
+
+while(current != NULL){
+Card* next = current->next; // store the next card
+current -> next = NULL;
+
+// count how many cards are currently in newDeck
+int length = 0;
+Card* temp = newDeck;
+while(temp != NULL){
+length++;
+temp = temp->next;
+}
+//Choose a random insertion position in newDeck
+int insert_pos = (length == 0) ? 0 : my_random() % (length + 1);
+
+if( insert_pos == 0) {
+current -> next = newDeck;
+newDeck = current;
+} else {
+//Insert in the middle or at the end
+Card* prev = newDeck;
+for(int i = 1; i < insert_pos; i++) {
+prev = prev->next;
+}
+current -> next = prev -> next;
+prev -> next = current;
+}
+current = next;
+}
+deck = newDeck;
 
 }
 void showDeck(){
