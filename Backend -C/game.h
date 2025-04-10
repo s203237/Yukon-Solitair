@@ -14,7 +14,12 @@ extern Card* deck;
 void initGame();
 bool loadDeckFromFile(const char* filename);
 void showDeck();
-void dealCards();
+void DealCards();
+void shuffleDeckRandom();
+void shuffleDeckSplit(int split);
+void moveCard();
+void printBoard();
+
 
 #endif
 
