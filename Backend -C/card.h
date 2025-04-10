@@ -1,5 +1,6 @@
 #ifndef CARD-H
 #define CARD_H
+#include <stdbool.h>
 
 typedef struct Card{
     char rank; //'A','2'...'K'

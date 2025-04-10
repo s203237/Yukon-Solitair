@@ -3,7 +3,7 @@
 #include"card.h"
 
 //create new card
-Card* createCard(char rank, char suit, int faceUp){
+Card* createCard(char rank, char suit,  bool faceUp){
     Card*newCard = (Card*)malloc(sizeof(Card));
     if(!newCard)return NULL;
     newCard ->rank = rank;
