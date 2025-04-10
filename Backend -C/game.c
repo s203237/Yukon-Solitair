@@ -39,16 +39,14 @@ bool loadDeckFromFile(const char*filename){
     fclose(file);
     return count ==52;
 }
-
-void shuffleDeckRandom(){
 //Simple seed-based pseudo-random generator
-int seed = 47;
-
+static int seed = 47;
 int my_random() {
-seed = (seed * 73 + 17) % 1007; //simple but sufficient for basic shuffling
-return seed;
+    seed = (seed * 73 + 17) % 1007; //simple but sufficient for basic shuffling
+    return seed;
 }
 
+void shuffleDeckRandom(){
 if (!deck) return;
 
 Card* newDeck = NULL; // the shuffled deck
