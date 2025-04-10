@@ -46,7 +46,7 @@ void shuffleDeckRandom(){
 void showDeck(){
 
 }
-void suffleDeckSplit(int split){
+void shuffleDeckSplit(int split){
 
 }
 
