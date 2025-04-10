@@ -3,9 +3,18 @@
 
 #include "card.h"
 
-extern Card* tableau[7];
-extern Card* foundations[4];
 
-void init_game(Card* Card_head);
+#define NUM_COLUMNS 7
+#define NUM_FOUNDATIONS 4
+
+extern Card* columns[NUM_COLUMNS];
+extern Card* foundations[NUM_FOUNDATIONS];
+extern Card* deck;
+
+void initGame();
+bool loadDeckFromFile(const char* filename);
+void showDeck();
+void dealCards();
 
 #endif
+
