@@ -43,15 +43,13 @@ bool loadDeckFromFile(const char*filename){
     fclose(file);
     return count ==52;
 }
-
+int my_random(int n) {
+    int seed = (n * 73 + 17) % 1007; //simple but sufficient for basic shuffling
+    return seed;
+}
 void shuffleDeckRandom(){
 //Simple seed-based pseudo-random generator
-int seed = 47;
-
-int my_random() {
-seed = (seed * 73 + 17) % 1007; //simple but sufficient for basic shuffling
-return seed;
-}
+int seed = my_random(47);
 
 if (!deck) return;
 
@@ -71,7 +69,7 @@ length++;
 temp = temp->next;
 }
 //Choose a random insertion position in newDeck
-int insert_pos = (length == 0) ? 0 : my_random() % (length + 1);
+int insert_pos = (length == 0) ? 0 : seed % (length + 1);
 
 if( insert_pos == 0) {
 current -> next = newDeck;
