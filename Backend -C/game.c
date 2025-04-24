@@ -43,14 +43,16 @@ bool loadDeckFromFile(const char*filename){
     fclose(file);
     return count ==52;
 }
-//Simple seed-based pseudo-random generator
-static int seed = 47;
-int my_random() {
-    seed = (seed * 73 + 17) % 1007; //simple but sufficient for basic shuffling
-    return seed;
-}
 
 void shuffleDeckRandom(){
+//Simple seed-based pseudo-random generator
+int seed = 47;
+
+int my_random() {
+seed = (seed * 73 + 17) % 1007; //simple but sufficient for basic shuffling
+return seed;
+}
+
 if (!deck) return;
 
 Card* newDeck = NULL; // the shuffled deck
@@ -88,12 +90,61 @@ current = next;
 deck = newDeck;
 
 }
+void suffleDeckSplit(int split){
+  if(!deck || split == 0) return;
+
+  //Split the deck into two parts
+  Card* firstHalf = deck;
+  Card* secondHalf = NULL;
+  Card* current = deck;
+  Card* prev = NULL;
+
+  int count = 0;
+  while (current != NULL && count < split) {
+    prev = current;
+    current = current -> next;
+    count++;
+  }
+
+  if (prev != NULL) {
+    prev -> next = NULL;
+    }
+    secondHalf = current;
+
+    //Interleave cards from both hslves
+    Card* shuffled = NULL;
+    Card** tail = &shuffled;
+
+    while(firstHalf != NULL || secondHalf != NULL){
+      if(firstHalf != NULL){
+        *tail = firstHalf;
+        tail = &firstHalf->next;
+        firstHalf = *tail;
+      }
+      if(secondHalf != NULL){
+        *tail = secondHalf;
+        tail = &secondHalf->next;
+        secondHalf = *tail;
+      }
+    }
+    deck = shuffled;
+
+
+}
 void showDeck(){
+  Card* current = deck;
+  while(current != NULL){
+    if(current -> faceUp) {
+      printf("%c%c", current -> rank, current -> suit); // prints faceUp cards
+      } else {
+        printf("[] "); // prints faceDown cards
+  }
+  current = current -> next;
+  }
+  printf("\n");
 
 }
-void shuffleDeckSplit(int split){
 
-}
 
 void DealCards(){
     Card*current = deck;
@@ -116,6 +167,7 @@ void DealCards(){
             } else {
                 prev ->next=current;
             }
+
             prev = current;
             current = next;
         }
@@ -158,54 +210,56 @@ void moveCard(int fromCol, char rank, char suit, int toCol ) {
         dest->next = src;
     }
 
+
 }
 
+void printBoard(){
+  //Printer column heeaders
+  for(int i = 0; i < NUM_COLUMNS; i++){
+    printf("C%d\t", i + 1);
+  }
+  printf("\tF1\tF2\tF3\tF4\n");
 
-void printBoard() {
-    //Printer column headers
-    for(int i = 0; i < NUM_COLUMNS; i++){
-        printf("C%d\t", i + 1);
+  //Find the tallest column to determine how many roews to print
+  int maxRows = 0;
+  for(int i = 0; i < NUM_FOUNDATIONS; i++){
+    int count = 0;
+    Card* temp = columns[i];
+    while(temp != NULL){
+      count++;
+      temp = temp -> next;
     }
-    printf("\tF1\tF2\tF3\tF4\n");
-
-    //Find the tallest column to determine how many rows to print
-    int maxRows = 0;
-    for(int i = 0; i < NUM_FOUNDATIONS; i++){
-        int count = 0;
-        Card* temp = columns[i];
-        while(temp != NULL){
-            count++;
-            temp = temp -> next;
+    if(count > maxRows) maxRows = count;
+  }
+  //Print each row of the columns
+  for(int row = 0; row < maxRows; row++){
+    for(int col = 0; col < NUM_COLUMNS; col++){
+      Card* temp = columns[col];
+      int r = 0;
+      while(temp != NULL && r < row) {
+        temp = temp -> next;
+        r++;
         }
-        if(count > maxRows) maxRows = count;
+        if(temp != NULL){
+    if(temp->faceUp){
+        printf("%c%c\t", temp->rank, temp->suit);
+    } else {
+        printf("[]\t");
     }
-    //Print each row of the columns
-    for(int row = 0; row < maxRows; row++){
-        for(int col = 0; col < NUM_COLUMNS; col++){
-            Card* temp = columns[col];
-            int r = 0;
-            while(temp != NULL && r < row) {
-                temp = temp -> next;
-                r++;
-            }
-            if(temp != NULL){
-                if(temp -> faceUp) {
-                    printf("%c%c\t", temp -> rank, temp -> suit);
-                } else
-                    printf("[]\t");
-                } else {
-                    printf("\t");
-                }
-            }
-            //Print foundations only on the first 4 rows (optional visual alignment)
-            if(row == 0) {
-                for(int f = 0; f < NUM_FOUNDATIONS; f++){
-                    if(foundations[f] != NULL && foundations[f] -> faceUp) {
-                        printf("%c%c\t", foundations[f] -> rank, foundations[f] -> suit);
-                    } else
-                        printf("[]\t");
-                    }
-                }
-                printf("\n");
-            }
+} else {
+    printf("\t");
+}
+
+    //Print foundations only on the first 4 rows (optional visual alignment)
+    if(row == 0) {
+      for(int f = 0; f < NUM_FOUNDATIONS; f++){
+        if(foundations[f] != NULL && foundations[f] -> faceUp){
+          printf("%c%c\t", foundations[f] -> rank, foundations[f] -> suit);}
+        else
+             { printf("[]\t");
+        }
+      }
+      printf("\n");
+  }
+
 }
