@@ -142,7 +142,7 @@ void showDeck(){
 }
 
 
-void DealCards(){
+void dealCards(){
     Card*current = deck;
 
     for (int col=0; col<NUM_COLUMNS; col++){
