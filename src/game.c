@@ -23,18 +23,18 @@ void initGame(){
 
 // load deck from file
 bool loadDeckFromFile(const char*filename){
-    FILE*file = fopen(filename,"r");
+    FILE* file = fopen(filename,"r");
     if(!file)return false;// if load successful: true
     // read file
     char line[10]; // read line by line from file
-    Card*last=NULL; // until the last card
+    Card* last=NULL; // until the last card
     int count =0;// count the number of cards read
 
     while(fgets(line, sizeof(line),file)){
         if(strlen(line)<2) continue;// skip if line is too short (invalid)
         char rank = line[0];
         char suit = line[1];
-        Card*newCard = createCard(rank, suit, false);// create a new card (default is faceUp = false)
+        Card* newCard = createCard(rank, suit, false);// create a new card (default is faceUp = false)
         if (!deck) deck = newCard;// add card to deck list
         else last ->next = newCard;
         last = newCard;
@@ -178,7 +178,7 @@ void moveCard(int fromCol, char rank, char suit, int toCol ) {
         return;
     }
     Card* src = columns[fromCol];
-    Card*prev =NULL;
+    Card* prev =NULL;
     // find a card to move
     while(src&& (src-> rank !=rank|| src -> suit!=suit|| !src->faceUp)){
     prev =src;
@@ -205,6 +205,7 @@ void moveCard(int fromCol, char rank, char suit, int toCol ) {
             printf("Invalid move. \n");
             return;
         }
+
         dest->next = src;
     }
 
