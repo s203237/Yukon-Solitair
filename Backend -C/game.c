@@ -236,23 +236,23 @@ void printBoard(){
         }
         if(temp != NULL){
           if(temp -> faceUp){
-            printf("%c%c\t", temp -> rank, temp -> suit);
+            printf("%c%c\t", temp -> rank, temp -> suit);}
             else
-                printf("[]\t");
-          } else {
-            printf("\t");
-        }
+               { printf("[]\t");}
+            else {printf("\t"); }
     }
+
     //Print foundations only on the first 4 rows (optional visual alignment)
     if(row == 0) {
       for(int f = 0; f < NUM_FOUNDATIONS; f++){
         if(foundations[f] != NULL && foundations[f] -> faceUp){
-          printf("%c%c\t", foundations[f] -> rank, foundations[f] -> suit);
-          else
-              printf("[]\t");
+          printf("%c%c\t", foundations[f] -> rank, foundations[f] -> suit);}
+        else
+             { printf("[]\t");
         }
       }
       printf("\n");
   }
 
+}}
 }
