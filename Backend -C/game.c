@@ -4,19 +4,23 @@
 #include <stdbool.h>
 #include "game.h"
 #include "card.h"
+#include "card.c"
 
-Card*columns[NUM_COLUMNS];
-Card*foundations[NUM_FOUNDATIONS];
-Card*deck =NULL;
+Card* columns[NUM_COLUMNS];
+Card* foundations[NUM_FOUNDATIONS];
+Card* deck =NULL;
 
 void initGame(){
-    for(int i=0; i<NUM_COLUMNS;i++)
-    columns[i]=NULL;
-    for(int i=0; i<NUM_FOUNDATIONS;i++)
-    foundations[i]=NULL;
+    for(int i=0; i<NUM_COLUMNS;i++) {
+        columns[i]=NULL;
+    }
+    for(int i=0; i<NUM_FOUNDATIONS;i++) {
+        foundations[i]=NULL;
+    }
     deck =NULL;
 
 }
+
 // load deck from file
 bool loadDeckFromFile(const char*filename){
     FILE*file = fopen(filename,"r");
@@ -26,7 +30,7 @@ bool loadDeckFromFile(const char*filename){
     Card*last=NULL; // until the last card
     int count =0;// count the number of cards read
 
-    while(fget(line, sixeof(line),file)){
+    while(fgets(line, sizeof(line),file)){
         if(strlen(line)<2) continue;// skip if line is too short (invalid)
         char rank = line[0];
         char suit = line[1];
@@ -119,8 +123,10 @@ void DealCards(){
 deck =current;
 }
 // to move a card from fromCol to toCol
-void moveCard(int fromCol, char rank, char suit, int toCol ){
-    if(fromCol<0|| fromCol>= NUM_COLUMNS ||toCol>=NUM_COLUMNS)return;
+void moveCard(int fromCol, char rank, char suit, int toCol ) {
+    if(fromCol<0|| fromCol>= NUM_COLUMNS ||toCol>=NUM_COLUMNS) {
+        return;
+    }
     Card* src = columns[fromCol];
     Card*prev =NULL;
     // find a card to move
@@ -145,7 +151,7 @@ void moveCard(int fromCol, char rank, char suit, int toCol ){
         Card*dest = columns[toCol];
         while(dest->next) dest =dest->next;
         // check: can it be connected?
-        if(!canMoveOnTop(dest,src)){
+        if(!canMoveOnTop(dest,src)) {
             printf("Invalid move. \n");
             return;
         }
@@ -155,6 +161,51 @@ void moveCard(int fromCol, char rank, char suit, int toCol ){
 }
 
 
-void printBoard(){
+void printBoard() {
+    //Printer column headers
+    for(int i = 0; i < NUM_COLUMNS; i++){
+        printf("C%d\t", i + 1);
+    }
+    printf("\tF1\tF2\tF3\tF4\n");
 
+    //Find the tallest column to determine how many rows to print
+    int maxRows = 0;
+    for(int i = 0; i < NUM_FOUNDATIONS; i++){
+        int count = 0;
+        Card* temp = columns[i];
+        while(temp != NULL){
+            count++;
+            temp = temp -> next;
+        }
+        if(count > maxRows) maxRows = count;
+    }
+    //Print each row of the columns
+    for(int row = 0; row < maxRows; row++){
+        for(int col = 0; col < NUM_COLUMNS; col++){
+            Card* temp = columns[col];
+            int r = 0;
+            while(temp != NULL && r < row) {
+                temp = temp -> next;
+                r++;
+            }
+            if(temp != NULL){
+                if(temp -> faceUp) {
+                    printf("%c%c\t", temp -> rank, temp -> suit);
+                } else
+                    printf("[]\t");
+                } else {
+                    printf("\t");
+                }
+            }
+            //Print foundations only on the first 4 rows (optional visual alignment)
+            if(row == 0) {
+                for(int f = 0; f < NUM_FOUNDATIONS; f++){
+                    if(foundations[f] != NULL && foundations[f] -> faceUp) {
+                        printf("%c%c\t", foundations[f] -> rank, foundations[f] -> suit);
+                    } else
+                        printf("[]\t");
+                    }
+                }
+                printf("\n");
+            }
 }
