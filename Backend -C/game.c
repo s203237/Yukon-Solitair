@@ -96,20 +96,20 @@ void suffleDeckSplit(int split){
   Card* prev = NULL;
 
   int count = 0;
-  while (current !NULL && count < split) {
+  while (current != NULL && count < split) {
     prev = current;
     current = current -> next;
     count++;
   }
 
-  if (prev !NULL) {
+  if (prev != NULL) {
     prev -> next = NULL;
     }
     secondHalf = current;
 
     //Interleave cards from both hslves
     Card* shuffled = NULL;
-    Card** tail = &sheffled;
+    Card** tail = &shuffled;
 
     while(firstHalf != NULL || secondHalf != NULL){
       if(firstHalf != NULL){
@@ -235,12 +235,14 @@ void printBoard(){
         r++;
         }
         if(temp != NULL){
-          if(temp -> faceUp){
-            printf("%c%c\t", temp -> rank, temp -> suit);}
-            else
-               { printf("[]\t");}
-            else {printf("\t"); }
+    if(temp->faceUp){
+        printf("%c%c\t", temp->rank, temp->suit);
+    } else {
+        printf("[]\t");
     }
+} else {
+    printf("\t");
+}
 
     //Print foundations only on the first 4 rows (optional visual alignment)
     if(row == 0) {
