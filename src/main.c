@@ -9,6 +9,7 @@ int main() {
     char input[100];// save user input command
     char lastCommand[100] = "";//display previous command
     char message[100] = "Welcome to Yukon!"; //notify execution result
+   printBoard();
 
     while (1) {
         printf("\nLAST Command: %s\n", lastCommand);
@@ -45,8 +46,8 @@ int main() {
 // #include <stdio.h>
 // #include "game.c"
 
-// int main() {
-//     printBoard();
-//     return 0;
-// }
+ //int main() {
+    //printBoard();
+     //return 0;
+ //}
 
