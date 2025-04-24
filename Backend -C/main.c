@@ -1,5 +1,5 @@
 
-#include "game.h"
+#include "game.c"
 #include <stdio.h>
 #include <string.h>
 
@@ -8,7 +8,7 @@ int main() {
 
     char input[100];// save user input command
     char lastCommand[100] = "";//display previous command
-    char message[100] = "Welcome to Yukon!"; //notify execution result
+    char message[100] = " "; //notify execution result
 
     while (1) {
         printf("\nLAST Command: %s\n", lastCommand);
