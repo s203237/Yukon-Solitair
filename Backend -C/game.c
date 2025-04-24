@@ -39,14 +39,16 @@ bool loadDeckFromFile(const char*filename){
     fclose(file);
     return count ==52;
 }
-//Simple seed-based pseudo-random generator
-static int seed = 47;
-int my_random() {
-    seed = (seed * 73 + 17) % 1007; //simple but sufficient for basic shuffling
-    return seed;
-}
 
 void shuffleDeckRandom(){
+//Simple seed-based pseudo-random generator
+int seed = 47;
+
+int my_random() {
+seed = (seed * 73 + 17) % 1007; //simple but sufficient for basic shuffling
+return seed;
+}
+
 if (!deck) return;
 
 Card* newDeck = NULL; // the shuffled deck
@@ -87,74 +89,16 @@ deck = newDeck;
 void showDeck(){
 
 }
-void shuffleDeckSplit(int split){
+void suffleDeckSplit(int split){
 
 }
 
 void DealCards(){
-    Card*current = deck;
-
-    for (int col=0; col<NUM_COLUMNS; col++){
-        int faceDown = col;
-        int faceUp =5; //there are always 5 open cards/column (c2-c7)
-        int total = faceDown+faceUp;
-
-        Card*prev =NULL;
-
-        for(int i =0;i<total;i++){
-            if(!current) return;
-            Card*next = current->next;
-            current->next =NULL;
-            current->faceUp =(i>=faceDown);
-
-            if(!columns[col]){
-                columns[col]=current;
-            } else {
-                prev ->next=current;
-            }
-            prev = current;
-            current = next;
-        }
-    }
-deck =current;
-}
-// to move a card from fromCol to toCol
-void moveCard(int fromCol, char rank, char suit, int toCol ){
-    if(fromCol<0|| fromCol>= NUM_COLUMNS ||toCol>=NUM_COLUMNS)return;
-    Card* src = columns[fromCol];
-    Card*prev =NULL;
-    // find a card to move
-    while(src&& (src-> rank !=rank|| src -> suit!=suit|| !src->faceUp)){
-    prev =src;
-    src =src->next;
-    }
-    if(!src)return; //Not found 
-    // if there is  prev -> stop at src
-    if(prev){
-        prev ->next =NULL;
-    }else {
-        columns[fromCol] =NULL;
-    }
-    //find the tail
-    Card*tail =src;
-    while(tail->next)tail =tail->next;
-    // add toCol
-    if(!columns[toCol]){
-        columns[toCol]=src;
-    }else {
-        Card*dest = columns[toCol];
-        while(dest->next) dest =dest->next;
-        // check: can it be connected?
-        if(!canMoveOnTop(dest,src)){
-            printf("Invalid move. \n");
-            return;
-        }
-        dest->next = src;
-    }
 
 }
+void moveCard(){
 
-
+}
 void printBoard(){
 
 }
