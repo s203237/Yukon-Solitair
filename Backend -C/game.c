@@ -214,13 +214,12 @@ void moveCard(int fromCol, char rank, char suit, int toCol ) {
 }
 
 void printBoard(){
-  //Printer column heeaders
+  //Printer column headers
   for(int i = 0; i < NUM_COLUMNS; i++){
     printf("C%d\t", i + 1);
   }
   printf("\tF1\tF2\tF3\tF4\n");
-
-  //Find the tallest column to determine how many roews to print
+  //Find the tallest column to determine how many rows to print
   int maxRows = 0;
   for(int i = 0; i < NUM_FOUNDATIONS; i++){
     int count = 0;
@@ -232,34 +231,35 @@ void printBoard(){
     if(count > maxRows) maxRows = count;
   }
   //Print each row of the columns
-  for(int row = 0; row < maxRows; row++){
-    for(int col = 0; col < NUM_COLUMNS; col++){
-      Card* temp = columns[col];
-      int r = 0;
-      while(temp != NULL && r < row) {
-        temp = temp -> next;
-        r++;
-        }
-        if(temp != NULL){
-    if(temp->faceUp){
-        printf("%c%c\t", temp->rank, temp->suit);
-    } else {
-        printf("[]\t");
-    }
-} else {
-    printf("\t");
-}
-
-    //Print foundations only on the first 4 rows (optional visual alignment)
-    if(row == 0) {
-      for(int f = 0; f < NUM_FOUNDATIONS; f++){
-        if(foundations[f] != NULL && foundations[f] -> faceUp){
-          printf("%c%c\t", foundations[f] -> rank, foundations[f] -> suit);}
-        else
-             { printf("[]\t");
-        }
+  for(int row = 0; row < maxRows; row++) {
+      for(int col = 0; col < NUM_COLUMNS; col++) {
+          Card* temp = columns[col];
+          int r = 0;
+          while(temp != NULL && r < row) {
+              temp = temp -> next;
+              r++;
+          }
+          if(temp != NULL) {
+              if(temp->faceUp){
+                  printf("%c%c\t", temp->rank, temp->suit);
+              }
+              else {
+                  printf("[]\t");
+              }
+          } else {
+              printf("\t");
+          }
+          //Print foundations only on the first 4 rows (optional visual alignment)
+          if(row == 0) {
+              for(int f = 0; f < NUM_FOUNDATIONS; f++){
+                  if(foundations[f] != NULL && foundations[f] -> faceUp){
+                      printf("%c%c\t", foundations[f] -> rank, foundations[f] -> suit);}
+                  else
+                  { printf("[]\t");
+                  }
+              }
+              printf("\n");
+          }
       }
-      printf("\n");
   }
-
 }
