@@ -30,21 +30,21 @@ void printCard(const Card*card){
         printf("[]\t"); // card is close
     }
 }
-//Compare to see if this card can be placed on another card
-bool canMoveOnTop(const Card*top, const Card*bottom){
-    if(!top||!bottom) return false;
-// check cards color: 
-    bool isRedTop = (top->suit == 'H' || top->suit == 'D');
-    bool isRedBottom = (bottom->suit == 'H' || bottom->suit == 'D');
-    if (isRedTop == isRedBottom) return false;
+// //Compare to see if this card can be placed on another card
+// bool canMoveOnTop(const Card*top, const Card*bottom){
+//     if(!top||!bottom) return false;
+// // check cards color: 
+//     bool isRedTop = (top->suit == 'H' || top->suit == 'D');
+//     bool isRedBottom = (bottom->suit == 'H' || bottom->suit == 'D');
+//     if (isRedTop == isRedBottom) return false;
 // compare the order of cards
-char ranks[] = "A23456789TJQK";
+// char ranks[] = "A23456789TJQK";
   
-int indexTop = -1, indexBottom = -1;
-for (int i = 0; i < 13; i++) {
-    if (ranks[i] == top->rank) indexTop = i;
-    if (ranks[i] == bottom->rank) indexBottom = i;
-}
-return indexTop + 1 == indexBottom;
+// int indexTop = -1, indexBottom = -1;
+// for (int i = 0; i < 13; i++) {
+//     if (ranks[i] == top->rank) indexTop = i;
+//     if (ranks[i] == bottom->rank) indexBottom = i;
+// }
+// return indexTop + 1 == indexBottom;
 
-}
+// }

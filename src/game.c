@@ -4,7 +4,9 @@
 #include <stdbool.h>
 #include "game.h"
 #include "card.h"
-#include "card.c"
+#include "io.h"
+#include "utils.h" 
+
 
 Card* columns[NUM_COLUMNS];
 Card* foundations[NUM_FOUNDATIONS];
@@ -21,28 +23,6 @@ void initGame(){
 
 }
 
-// load deck from file
-bool loadDeckFromFile(const char*filename){
-    FILE*file = fopen(filename,"r");
-    if(!file)return false;// if load successful: true
-    // read file
-    char line[10]; // read line by line from file
-    Card*last=NULL; // until the last card
-    int count =0;// count the number of cards read
-
-    while(fgets(line, sizeof(line),file)){
-        if(strlen(line)<2) continue;// skip if line is too short (invalid)
-        char rank = line[0];
-        char suit = line[1];
-        Card*newCard = createCard(rank, suit, false);// create a new card (default is faceUp = false)
-        if (!deck) deck = newCard;// add card to deck list
-        else last ->next = newCard;
-        last = newCard;
-        count++;
-    }
-    fclose(file);
-    return count ==52;
-}
 int my_random(int n) {
     int seed = (n * 73 + 17) % 1007; //simple but sufficient for basic shuffling
     return seed;
@@ -175,6 +155,7 @@ deck =current;
 // to move a card from fromCol to toCol
 void moveCard(int fromCol, char rank, char suit, int toCol ) {
     if(fromCol<0|| fromCol>= NUM_COLUMNS ||toCol>=NUM_COLUMNS) {
+        printf("Invalid column index.\n");
         return;
     }
     Card* src = columns[fromCol];
@@ -195,14 +176,22 @@ void moveCard(int fromCol, char rank, char suit, int toCol ) {
     Card*tail =src;
     while(tail->next)tail =tail->next;
     // add toCol
-    if(!columns[toCol]){
-        columns[toCol]=src;
+    if (!columns[toCol]) {
+        if (rank != 'K') {
+            printf("Only King can be moved to empty column.\n");
+            if (prev) prev->next = src;
+            else columns[fromCol] = src;
+            return;
+        }
+        columns[toCol] = src;
     }else {
         Card*dest = columns[toCol];
         while(dest->next) dest =dest->next;
         // check: can it be connected?
-        if(!canMoveOnTop(dest,src)) {
-            printf("Invalid move. \n");
+        if (!isValidMove(src, dest)) {
+            printf("Invalid move: doesn't follow Yukon rules.\n");
+            if (prev) prev->next = src;
+            else columns[fromCol] = src;
             return;
         }
         dest->next = src;

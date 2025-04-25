@@ -1,7 +1,8 @@
 
-#include "game.c"
 #include <stdio.h>
 #include <string.h>
+#include "io.h"
+#include "game.h"
 
 int main() {
     initGame();

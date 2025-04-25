@@ -12,7 +12,6 @@ extern Card* foundations[NUM_FOUNDATIONS];
 extern Card* deck;
 
 void initGame();
-bool loadDeckFromFile(const char* filename);
 void showDeck();
 void dealCards();
 void shuffleDeckRandom();
