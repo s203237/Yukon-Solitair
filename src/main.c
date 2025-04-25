@@ -1,10 +1,28 @@
 
-#include "game.c"
+/*#include "game.c"
 #include <stdio.h>
-#include <string.h>
+#include <string.h>*/
+#include "linked_list_test.c"
+#include "card.c"
 
 int main() {
-    initGame();
+    Board* board = initBoard();
+    printf("Board initialized\n");
+    Card* sampleCard = createCard('T', 'C', false);
+    printf("card created: %c of %c\n", sampleCard->rank, sampleCard->suit);
+    int status = addCard(board, sampleCard, 4, 1);
+    if (status) {
+        printf("card added\n");
+    }
+    status = addCard(board, sampleCard, 4, 2);
+    if (status) {
+        printf("card added\n");
+    }
+    printf("%c, %c exists", board->head->next->next->next->next->head->next->next->rank, board->head->next->next->next->next->head->next->next->suit);
+
+    return 0;
+}
+    /*initGame();
 
     char input[100];// save user input command
     char lastCommand[100] = "";//display previous command
@@ -40,8 +58,8 @@ int main() {
         }
     }
 
-    return 0;
-}
+    return 0;*/
+
 
 // #include <stdio.h>
 // #include "game.c"
