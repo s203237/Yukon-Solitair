@@ -74,7 +74,7 @@ Board* initBoard() {
 int addCard(const Board* board, Card* card, const int col, const int row) {
     Card* newCard = card;
     const Column* curr_col = board->head;
-    if (row <= 0 | row > 13 | col <= 0 | col > 7) {
+    if (row <= 0 || row > 13 || col <= 0 || col > 7) {
         printf("Col %d, row %d is outside of the playable board\n", col, row);
         return 0;
     }
@@ -102,6 +102,8 @@ int addCard(const Board* board, Card* card, const int col, const int row) {
         curr_node = curr_node->next;
     }
     newCard->next = curr_node->next;
+    newCard->prev = curr_node;
+    curr_node->next->prev = newCard;
     curr_node->next = newCard;
     return 1;
 }
@@ -122,12 +124,16 @@ bool boardHasCard(const Board* board) {
 
 void emptyBoard(const Board* board) {
     for (const Column* col = board->head->next; col != board->tail; col = col->next) {
+        printf("Emptying column %p (head=%p, tail=%p)\n", (void*)col, (void*)col->head, (void*)col->tail);
         Card* card = col->head->next;
         while(card != col->tail) {
                 Card* nextCard = card->next;
+                printf("  freeing card %p (->next = %p)\n", (void*)card, (void*)nextCard);
                 free(card);
                 card = nextCard;
         }
+        col->head->next = col->tail;
+        col->tail->prev = col->head;
     }
     for (const Foundation* fond = board->foundationHead->next; fond != board->foundationTail; fond = fond->next) {
         Card* card = fond->head->next;
@@ -136,6 +142,8 @@ void emptyBoard(const Board* board) {
             free(card);
             card = nextCard;
         }
+        fond->head->next = fond->tail;
+        fond->tail->prev = fond->head;
     }
 }
 

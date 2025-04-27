@@ -9,17 +9,21 @@ int main() {
     Board* board = initBoard();
     printf("Board initialized\n");
     Card* sampleCard = createCard('T', 'C', false);
+    Card* sampleCard2 = createCard('J', 'C', false);
     printf("card created: %c of %c\n", sampleCard->rank, sampleCard->suit);
     int status = addCard(board, sampleCard, 4, 1);
     if (status) {
         printf("card added\n");
     }
-    status = addCard(board, sampleCard, 4, 2);
+    status = addCard(board, sampleCard2, 4, 2);
     if (status) {
         printf("card added\n");
     }
-    printf("%c, %c exists", board->head->next->next->next->next->head->next->next->rank, board->head->next->next->next->next->head->next->next->suit);
-
+    //printf("%c, %c exists\n", board->head->next->next->next->next->head->next->next->rank, board->head->next->next->next->next->head->next->next->suit);
+    printf("%s\n", boardHasCard(board) ? "true" : "false");
+    emptyBoard(board);
+    printf("board should be empty\n");
+    printf("%s\n", boardHasCard(board) ? "true" : "false");
     return 0;
 }
     /*initGame();
