@@ -106,6 +106,52 @@ int addCard(const Board* board, Card* card, const int col, const int row) {
     return 1;
 }
 
+bool boardHasCard(const Board* board) {
+    for (const Column* col = board->head->next; col != board->tail; col = col->next) {
+        if (col->head->next != col->tail) {
+            return true;
+        }
+    }
+    for (const Foundation* fond = board->foundationHead->next; fond != board->foundationTail; fond = fond->next) {
+        if (fond->head->next != fond->tail) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void emptyBoard(const Board* board) {
+    for (const Column* col = board->head->next; col != board->tail; col = col->next) {
+        Card* card = col->head->next;
+        while(card != col->tail) {
+                Card* nextCard = card->next;
+                free(card);
+                card = nextCard;
+        }
+    }
+    for (const Foundation* fond = board->foundationHead->next; fond != board->foundationTail; fond = fond->next) {
+        Card* card = fond->head->next;
+        while (card != fond->tail) {
+            Card* nextCard = card->next;
+            free(card);
+            card = nextCard;
+        }
+    }
+}
+
+void loadFromFile(FILE* file, Board* board) {
+
+}
+
+void loadCommand(FILE* file, Board* board) {
+    if (boardHasCard(board)) {
+        emptyBoard(board);
+        loadFromFile(file, board);
+    } else {
+        loadFromFile(file, board);
+    }
+}
+
 
 
 //void moveCards()
