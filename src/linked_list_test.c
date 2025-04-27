@@ -173,7 +173,12 @@ void loadCommand(FILE* file, Board* board) {
 
 
 
-//void moveCards()
+void moveCard(Card* card) { //Also pass target location somehow
+    //check if legal move
+    //unlink card from current position
+    //attach to new position
+    //else throw error
+}
 
 /*Card* locateCard(int col, int row) {
     Card* temp = NULL;
