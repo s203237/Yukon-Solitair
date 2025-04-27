@@ -140,7 +140,18 @@ void emptyBoard(const Board* board) {
 }
 
 void loadFromFile(FILE* file, Board* board) {
-
+    //Check does file exist
+    //if exists then {
+        //attempt to load
+        //validate line if valid then {
+            //AddCard
+        //} else {
+            //emptyBoard
+            //Throw error
+        //}
+    //} else {
+        //Throw error
+    //}
 }
 
 void loadCommand(FILE* file, Board* board) {
