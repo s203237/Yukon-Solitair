@@ -68,7 +68,8 @@ class Card:
         return None
 
     #create deck
-    suits = ['S', 'H', 'D', 'C']
+    suits = ['♠', '♥', '♦', '♣']
+
 ranks = ['A'] + [str(n) for n in range(2, 11)] + ['J', 'Q', 'K']
 deck = [Card(s, r, 0, 0) for s in suits for r in ranks]
 random.shuffle(deck)

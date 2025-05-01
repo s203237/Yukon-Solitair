@@ -1,0 +1,3 @@
+/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles/Yukon_Solitair.dir
+/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles/rebuild_cache.dir
