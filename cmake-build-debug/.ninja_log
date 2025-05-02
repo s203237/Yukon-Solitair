@@ -1,0 +1,4 @@
+# ninja log v6
+2	158	1745488666232940331	CMakeFiles/Yukon_Solitair.dir/Backend_-C/utils.c.o	4228ded845b9859b
+2	158	1745488666232609788	CMakeFiles/Yukon_Solitair.dir/Backend_-C/io.c.o	1a1313b98f77b1c8
+5	199	1745488816185086254	CMakeFiles/Yukon_Solitair.dir/Backend_-C/card.c.o	8879377e6dc777ba
