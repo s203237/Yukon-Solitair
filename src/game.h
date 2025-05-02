@@ -1,6 +1,5 @@
 #ifndef GAME_H
 #define GAME_H
-
 #include "card.h"
 
 
@@ -13,6 +12,7 @@ extern Card* deck;
 
 void initGame();
 void showDeck();
+void showAllCards();
 void dealCards();
 void shuffleDeckRandom();
 void shuffleDeckSplit(int split);

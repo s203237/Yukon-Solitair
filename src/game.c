@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 #include "game.h"
 #include "card.h"
 #include "io.h"
@@ -18,7 +19,8 @@ void initGame(){
         columns[i]=NULL;
     }
     for(int i=0; i<NUM_FOUNDATIONS;i++) {
-        foundations[i]=NULL;
+       // foundations[0]=createCard('A','s',true); //TEST
+       foundations[i]=NULL;
     }
     deck =NULL;
 
@@ -29,48 +31,39 @@ int my_random(int n) {
     int seed = (n * 73 + 17) % 1007; //simple but sufficient for basic shuffling
     return seed;
 }
+
 void shuffleDeckRandom(){
-//Simple seed-based pseudo-random generator
-int seed = my_random(47);
-
+// Convert deck to array for easy shuffling
 if (!deck) return;
+Card* array[52];
+int n=0;
+Card*current = deck;
 
-Card* newDeck = NULL; // the shuffled deck
-Card* current = deck;
-deck = NULL;  // empty the original deck
+while(current != NULL && n<52){
+array[n++]=current;
+current =current -> next;
 
-while(current != NULL){
-Card* next = current->next; // store the next card
-current -> next = NULL;
+// shuffle
+srand(time(NULL));
+for(int i=n-1; i>0;i--){
+    int j = rand()%(i+1);
+    Card*tmp =array[i];
+    array[i]=array[j];
+    array[j]=tmp;
+}
+// covert back to linked list
+for(int i=0;i<n-1;i++){
+    array[i]->next= array[i+1];
+    array[i]->faceUp =false;
+}
+array[n - 1]->next = NULL;
+array[n - 1]->faceUp = false;
 
-// count how many cards are currently in newDeck
-int length = 0;
-Card* temp = newDeck;
-while(temp != NULL){
-length++;
-temp = temp->next;
-}
-//Choose a random insertion position in newDeck
-int insert_pos = (length == 0) ? 0 : seed % (length + 1);
-
-if( insert_pos == 0) {
-current -> next = newDeck;
-newDeck = current;
-} else {
-//Insert in the middle or at the end
-Card* prev = newDeck;
-for(int i = 1; i < insert_pos; i++) {
-prev = prev->next;
-}
-current -> next = prev -> next;
-prev -> next = current;
-}
-current = next;
-}
-deck = newDeck;
+deck = array[0];
 
 }
-void suffleDeckSplit(int split){
+}
+void shuffleDeckSplit(int split){
   if(!deck || split == 0) return;
 
   //Split the deck into two parts
@@ -111,6 +104,16 @@ void suffleDeckSplit(int split){
 
 
 }
+// This method will flip all cards in the columns face up.
+void showAllCards() {
+    for (int i = 0; i < NUM_COLUMNS; i++) {
+        Card* current = columns[i];
+        while (current != NULL) {
+            current->faceUp = true;
+            current = current->next;
+        }
+    }
+}
 void showDeck(){
   Card* current = deck;
   while(current != NULL){
@@ -128,19 +131,16 @@ void showDeck(){
 
 void dealCards(){
     Card*current = deck;
-
     for (int col=0; col<NUM_COLUMNS; col++){
-        int faceDown = col;
-        int faceUp =5; //there are always 5 open cards/column (c2-c7)
-        int total = faceDown+faceUp;
-
+        int total = (col < 3) ? 8 : 7;  // C1–C3: 8 cards, C4–C7: 7 cards
+    
         Card*prev =NULL;
 
         for(int i =0;i<total;i++){
             if(!current) return;
             Card*next = current->next;
             current->next =NULL;
-            current->faceUp =(i>=faceDown);
+            current->faceUp =false;
 
             if(!columns[col]){
                 columns[col]=current;
@@ -207,7 +207,7 @@ void printBoard() {
     for (int i = 0; i < NUM_COLUMNS; i++) {
         printf("C%d\t", i + 1);
     }
-    printf("\n");
+    printf("\n\n");
 
     //  2. Find maxim number of cards in columns.
     int maxRows = 0;
@@ -235,6 +235,7 @@ void printBoard() {
                 temp = temp->next;
                 r++;
             }
+    
             // Prints the card or an empty space
             if (temp != NULL) {
                 if (temp->faceUp) {
@@ -245,15 +246,27 @@ void printBoard() {
             } else {
                 printf("\t");
             }
+            
         }
 
         // Prints foundation name F1-F4 to the right side.
         if (row < NUM_FOUNDATIONS) {
-            printf("\t\tF%d", row + 1); //Adds extra tabs to have right placement
-        }
-        // Ends the row
-        printf("\n");
+            if (foundations[row] != NULL) {
+                if (foundations[row]->faceUp)
+                    printf("\t[%c%c]", foundations[row]->rank, foundations[row]->suit);
+                else
+                    printf("\t[]");
+            } else {
+                printf("\t[]");
+            }
+        
+            // print name F1 - F4
+            printf("\tF%d", row + 1);
+            printf("\n\n");
+        } else{
+   
+        printf("\n");}
+        
     }
 }
-
 

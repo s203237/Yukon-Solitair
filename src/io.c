@@ -27,6 +27,8 @@ bool loadDeckFromFile(const char*filename){
     fclose(file);
     return count ==52;
 }
+
+
 void saveList(FILE*file, Card*head){
     while(head){
         fprintf(file,"%c%c %d\n",head->rank, head->suit,head->faceUp?1:0);

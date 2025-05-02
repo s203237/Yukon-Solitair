@@ -2,31 +2,32 @@
 triple:          'arm64-apple-darwin'
 binary-path:     yokon
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002650, symSize: 0x260 }
-  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002650, symSize: 0x260 }
-  - { offsetInCU: 0x26, offset: 0xC0, size: 0x8, addend: 0x0, symName: _initGame, symObjAddr: 0x0, symBinAddr: 0x1000028B0, symSize: 0x9C }
-  - { offsetInCU: 0x3F, offset: 0xD9, size: 0x8, addend: 0x0, symName: _deck, symObjAddr: 0x2250, symBinAddr: 0x100008000, symSize: 0x0 }
-  - { offsetInCU: 0xB7, offset: 0x151, size: 0x8, addend: 0x0, symName: _columns, symBinAddr: 0x100008008, symSize: 0x0 }
-  - { offsetInCU: 0xD8, offset: 0x172, size: 0x8, addend: 0x0, symName: _foundations, symBinAddr: 0x100008040, symSize: 0x0 }
-  - { offsetInCU: 0xED, offset: 0x187, size: 0x8, addend: 0x0, symName: _initGame, symObjAddr: 0x0, symBinAddr: 0x1000028B0, symSize: 0x9C }
-  - { offsetInCU: 0x13B, offset: 0x1D5, size: 0x8, addend: 0x0, symName: _my_random, symObjAddr: 0x9C, symBinAddr: 0x10000294C, symSize: 0x38 }
-  - { offsetInCU: 0x171, offset: 0x20B, size: 0x8, addend: 0x0, symName: _shuffleDeckRandom, symObjAddr: 0xD4, symBinAddr: 0x100002984, symSize: 0x1BC }
-  - { offsetInCU: 0x22F, offset: 0x2C9, size: 0x8, addend: 0x0, symName: _suffleDeckSplit, symObjAddr: 0x290, symBinAddr: 0x100002B40, symSize: 0x1C8 }
-  - { offsetInCU: 0x2B7, offset: 0x351, size: 0x8, addend: 0x0, symName: _showDeck, symObjAddr: 0x458, symBinAddr: 0x100002D08, symSize: 0xAC }
-  - { offsetInCU: 0x2DB, offset: 0x375, size: 0x8, addend: 0x0, symName: _dealCards, symObjAddr: 0x504, symBinAddr: 0x100002DB4, symSize: 0x154 }
-  - { offsetInCU: 0x399, offset: 0x433, size: 0x8, addend: 0x0, symName: _moveCard, symObjAddr: 0x658, symBinAddr: 0x100002F08, symSize: 0x2F4 }
-  - { offsetInCU: 0x42D, offset: 0x4C7, size: 0x8, addend: 0x0, symName: _printBoard, symObjAddr: 0x94C, symBinAddr: 0x1000031FC, symSize: 0x354 }
-  - { offsetInCU: 0x26, offset: 0x5FD, size: 0x8, addend: 0x0, symName: _createCard, symObjAddr: 0x0, symBinAddr: 0x100003550, symSize: 0x94 }
-  - { offsetInCU: 0x96, offset: 0x66D, size: 0x8, addend: 0x0, symName: _createCard, symObjAddr: 0x0, symBinAddr: 0x100003550, symSize: 0x94 }
-  - { offsetInCU: 0xE8, offset: 0x6BF, size: 0x8, addend: 0x0, symName: _freeCardList, symObjAddr: 0x94, symBinAddr: 0x1000035E4, symSize: 0x54 }
-  - { offsetInCU: 0x128, offset: 0x6FF, size: 0x8, addend: 0x0, symName: _printCard, symObjAddr: 0xE8, symBinAddr: 0x100003638, symSize: 0x98 }
-  - { offsetInCU: 0x26, offset: 0x753, size: 0x8, addend: 0x0, symName: _rankToValue, symObjAddr: 0x0, symBinAddr: 0x1000036D0, symSize: 0xC8 }
-  - { offsetInCU: 0x33, offset: 0x760, size: 0x8, addend: 0x0, symName: _rankToValue, symObjAddr: 0x0, symBinAddr: 0x1000036D0, symSize: 0xC8 }
-  - { offsetInCU: 0x5B, offset: 0x788, size: 0x8, addend: 0x0, symName: _isRed, symObjAddr: 0x118, symBinAddr: 0x1000037E8, symSize: 0x48 }
-  - { offsetInCU: 0x83, offset: 0x7B0, size: 0x8, addend: 0x0, symName: _isValidMove, symObjAddr: 0x160, symBinAddr: 0x100003830, symSize: 0xF4 }
-  - { offsetInCU: 0x26, offset: 0x88B, size: 0x8, addend: 0x0, symName: _loadDeckFromFile, symObjAddr: 0x0, symBinAddr: 0x100003924, symSize: 0x188 }
-  - { offsetInCU: 0x41, offset: 0x8A6, size: 0x8, addend: 0x0, symName: _loadDeckFromFile, symObjAddr: 0x0, symBinAddr: 0x100003924, symSize: 0x188 }
-  - { offsetInCU: 0xD9, offset: 0x93E, size: 0x8, addend: 0x0, symName: _saveList, symObjAddr: 0x188, symBinAddr: 0x100003AAC, symSize: 0x9C }
-  - { offsetInCU: 0x10B, offset: 0x970, size: 0x8, addend: 0x0, symName: _saveGameToFile, symObjAddr: 0x224, symBinAddr: 0x100003B48, symSize: 0x160 }
-  - { offsetInCU: 0x175, offset: 0x9DA, size: 0x8, addend: 0x0, symName: _printMessage, symObjAddr: 0x384, symBinAddr: 0x100003CA8, symSize: 0x34 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x1000023C0, symSize: 0x36C }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x1000023C0, symSize: 0x36C }
+  - { offsetInCU: 0x26, offset: 0xF1, size: 0x8, addend: 0x0, symName: _initGame, symObjAddr: 0x0, symBinAddr: 0x10000272C, symSize: 0x9C }
+  - { offsetInCU: 0x3F, offset: 0x10A, size: 0x8, addend: 0x0, symName: _deck, symObjAddr: 0x2440, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offsetInCU: 0xB7, offset: 0x182, size: 0x8, addend: 0x0, symName: _columns, symBinAddr: 0x100008008, symSize: 0x0 }
+  - { offsetInCU: 0xD8, offset: 0x1A3, size: 0x8, addend: 0x0, symName: _foundations, symBinAddr: 0x100008040, symSize: 0x0 }
+  - { offsetInCU: 0xED, offset: 0x1B8, size: 0x8, addend: 0x0, symName: _initGame, symObjAddr: 0x0, symBinAddr: 0x10000272C, symSize: 0x9C }
+  - { offsetInCU: 0x13B, offset: 0x206, size: 0x8, addend: 0x0, symName: _my_random, symObjAddr: 0x9C, symBinAddr: 0x1000027C8, symSize: 0x38 }
+  - { offsetInCU: 0x171, offset: 0x23C, size: 0x8, addend: 0x0, symName: _shuffleDeckRandom, symObjAddr: 0xD4, symBinAddr: 0x100002800, symSize: 0x208 }
+  - { offsetInCU: 0x213, offset: 0x2DE, size: 0x8, addend: 0x0, symName: _shuffleDeckSplit, symObjAddr: 0x2DC, symBinAddr: 0x100002A08, symSize: 0x1C8 }
+  - { offsetInCU: 0x29B, offset: 0x366, size: 0x8, addend: 0x0, symName: _showAllCards, symObjAddr: 0x4A4, symBinAddr: 0x100002BD0, symSize: 0x84 }
+  - { offsetInCU: 0x2E9, offset: 0x3B4, size: 0x8, addend: 0x0, symName: _showDeck, symObjAddr: 0x528, symBinAddr: 0x100002C54, symSize: 0xAC }
+  - { offsetInCU: 0x30D, offset: 0x3D8, size: 0x8, addend: 0x0, symName: _dealCards, symObjAddr: 0x5D4, symBinAddr: 0x100002D00, symSize: 0x140 }
+  - { offsetInCU: 0x3AF, offset: 0x47A, size: 0x8, addend: 0x0, symName: _moveCard, symObjAddr: 0x714, symBinAddr: 0x100002E40, symSize: 0x2F4 }
+  - { offsetInCU: 0x443, offset: 0x50E, size: 0x8, addend: 0x0, symName: _printBoard, symObjAddr: 0xA08, symBinAddr: 0x100003134, symSize: 0x388 }
+  - { offsetInCU: 0x26, offset: 0x634, size: 0x8, addend: 0x0, symName: _createCard, symObjAddr: 0x0, symBinAddr: 0x1000034BC, symSize: 0x94 }
+  - { offsetInCU: 0x96, offset: 0x6A4, size: 0x8, addend: 0x0, symName: _createCard, symObjAddr: 0x0, symBinAddr: 0x1000034BC, symSize: 0x94 }
+  - { offsetInCU: 0xE8, offset: 0x6F6, size: 0x8, addend: 0x0, symName: _freeCardList, symObjAddr: 0x94, symBinAddr: 0x100003550, symSize: 0x54 }
+  - { offsetInCU: 0x128, offset: 0x736, size: 0x8, addend: 0x0, symName: _printCard, symObjAddr: 0xE8, symBinAddr: 0x1000035A4, symSize: 0x98 }
+  - { offsetInCU: 0x26, offset: 0x78A, size: 0x8, addend: 0x0, symName: _rankToValue, symObjAddr: 0x0, symBinAddr: 0x10000363C, symSize: 0xC8 }
+  - { offsetInCU: 0x33, offset: 0x797, size: 0x8, addend: 0x0, symName: _rankToValue, symObjAddr: 0x0, symBinAddr: 0x10000363C, symSize: 0xC8 }
+  - { offsetInCU: 0x5B, offset: 0x7BF, size: 0x8, addend: 0x0, symName: _isRed, symObjAddr: 0x118, symBinAddr: 0x100003754, symSize: 0x48 }
+  - { offsetInCU: 0x83, offset: 0x7E7, size: 0x8, addend: 0x0, symName: _isValidMove, symObjAddr: 0x160, symBinAddr: 0x10000379C, symSize: 0xF4 }
+  - { offsetInCU: 0x26, offset: 0x8C2, size: 0x8, addend: 0x0, symName: _loadDeckFromFile, symObjAddr: 0x0, symBinAddr: 0x100003890, symSize: 0x188 }
+  - { offsetInCU: 0x41, offset: 0x8DD, size: 0x8, addend: 0x0, symName: _loadDeckFromFile, symObjAddr: 0x0, symBinAddr: 0x100003890, symSize: 0x188 }
+  - { offsetInCU: 0xD9, offset: 0x975, size: 0x8, addend: 0x0, symName: _saveList, symObjAddr: 0x188, symBinAddr: 0x100003A18, symSize: 0x9C }
+  - { offsetInCU: 0x10B, offset: 0x9A7, size: 0x8, addend: 0x0, symName: _saveGameToFile, symObjAddr: 0x224, symBinAddr: 0x100003AB4, symSize: 0x160 }
+  - { offsetInCU: 0x175, offset: 0xA11, size: 0x8, addend: 0x0, symName: _printMessage, symObjAddr: 0x384, symBinAddr: 0x100003C14, symSize: 0x34 }
 ...
