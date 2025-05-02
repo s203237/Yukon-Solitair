@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <string.h>*/
 #include "linked_list_test.c"
-#include "card.c"
+//#include "card.c"
 
 int main() {
     Board* board = initBoard();
-    printf("Board initialized\n");
+    /*printf("Board initialized\n");
     Card* sampleCard = createCard('T', 'C', false);
     Card* sampleCard2 = createCard('J', 'C', false);
     printf("card created: %c of %c\n", sampleCard->rank, sampleCard->suit);
@@ -24,7 +24,8 @@ int main() {
     emptyBoard(board);
     printf("board should be empty\n");
     printf("%s\n", boardHasCard(board) ? "true" : "false");
-    return 0;
+    return 0;*/
+    loadFromFile("src/cards.txt", board);
 }
     /*initGame();
 

@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "card.h"
+#include "card.c"
+#include <unistd.h>
+#include <string.h>
 
 typedef struct column {
     Card* head;
@@ -147,29 +150,91 @@ void emptyBoard(const Board* board) {
     }
 }
 
-void loadFromFile(FILE* file, Board* board) {
-    //Check does file exist
-    //if exists then {
-        //attempt to load
-        //validate line if valid then {
-            //AddCard
-        //} else {
-            //emptyBoard
-            //Throw error
-        //}
-    //} else {
-        //Throw error
-    //}
+void loadFromFile(const char* path, const Board* board) {
+    bool seen[52] = {false};
+
+    FILE* file = NULL;
+    if (access(path, F_OK) == 0) {
+        if (access(path, R_OK) == 0) {
+            file = fopen(path, "r");
+        } else {
+            printf("Could not read from this file");
+            return;
+        }
+    } else {
+        printf("File doesn't exist");
+        return;
+    }
+    if (file) {
+        int col = 1, row = 1;
+        for (int i = 1; i <= 53; i++) {
+            char line[4];
+            const char* ret = fgets(line, 4, file);
+            if (ret != NULL) {
+                if (i <= 52) {
+                    line[strcspn(line, "\n")] = '\0';
+                    if (strlen(line) == 2) {
+                        const char* suits = "CDHS";
+                        const char* ranks = "A23456789TJQK";
+                        char rank = line[0], suit = line[1];
+                        char* rp = strchr(ranks, rank);
+                        char* sp = strchr(suits, suit);
+                        if (!rp || !sp) {
+                            printf("There is an illegal card %s on line %i", line, i);
+                            emptyBoard(board);
+                            return;
+                        }
+                        int rankidx = (int)(rp - ranks);
+                        int suitidx = (int)(sp - suits);
+                        int idx = suitidx * 13 + rankidx;
+
+                        if (seen[idx]) {
+                            printf("Duplicate card at line %i", i);
+                            emptyBoard(board);
+                            return;
+                        } else {
+                            seen[idx] = true;
+                            Card* card = createCard(rank, suit, false);
+                            addCard(board, card, col, row);
+                            printf("The card %c of %c has been added at col %i, row %i\n", card->rank, card->suit, col, row);
+                            col++;
+                            if (col > 7) {
+                                col = 1;
+                                row++;
+                            }
+                        }
+                    } else {
+                        printf("line %i contains an invalid card %s that is either too long or short\n", i, line);
+                        emptyBoard(board);
+                        return;
+                    }
+                    //Validate and add
+                    //if invalid empty board that is being filled and error
+                } else {
+                    printf("Too many lines in this file");
+                    emptyBoard(board);
+                    return;
+                }
+            } else if (i < 52) {
+                printf("There is only %i lines in this file", i-1);
+                emptyBoard(board);
+                return;
+            }
+
+        }
+    } else {
+        printf("Something went wrong while loading the file");
+    }
 }
 
-void loadCommand(FILE* file, Board* board) {
+/*void loadCommand(FILE* file, Board* board) {
     if (boardHasCard(board)) {
         emptyBoard(board);
         loadFromFile(file, board);
     } else {
         loadFromFile(file, board);
     }
-}
+}*/
 
 
 
