@@ -17,5 +17,5 @@ add_executable(Yukon_Solitair
         "src/main.c"
         "src/utils.c"
 
-        gui_py/backend_bridge.py
+        gui_py/Client.py
         gui_py/gui.py)
