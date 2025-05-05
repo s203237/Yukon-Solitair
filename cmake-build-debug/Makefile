@@ -249,6 +249,30 @@ src/utils.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Yukon_Solitair.dir/build.make CMakeFiles/Yukon_Solitair.dir/src/utils.c.s
 .PHONY : src/utils.c.s
 
+src/yokon.dSYM/server.o: src/yokon.dSYM/server.c.o
+.PHONY : src/yokon.dSYM/server.o
+
+# target to build an object file
+src/yokon.dSYM/server.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Yukon_Solitair.dir/build.make CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o
+.PHONY : src/yokon.dSYM/server.c.o
+
+src/yokon.dSYM/server.i: src/yokon.dSYM/server.c.i
+.PHONY : src/yokon.dSYM/server.i
+
+# target to preprocess a source file
+src/yokon.dSYM/server.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Yukon_Solitair.dir/build.make CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.i
+.PHONY : src/yokon.dSYM/server.c.i
+
+src/yokon.dSYM/server.s: src/yokon.dSYM/server.c.s
+.PHONY : src/yokon.dSYM/server.s
+
+# target to generate assembly for a file
+src/yokon.dSYM/server.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Yukon_Solitair.dir/build.make CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.s
+.PHONY : src/yokon.dSYM/server.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -273,6 +297,9 @@ help:
 	@echo "... src/utils.o"
 	@echo "... src/utils.i"
 	@echo "... src/utils.s"
+	@echo "... src/yokon.dSYM/server.o"
+	@echo "... src/yokon.dSYM/server.i"
+	@echo "... src/yokon.dSYM/server.s"
 .PHONY : help
 
 

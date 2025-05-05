@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Yukon_Solitair.dir/src/main.c.o.d"
   "CMakeFiles/Yukon_Solitair.dir/src/utils.c.o"
   "CMakeFiles/Yukon_Solitair.dir/src/utils.c.o.d"
+  "CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o"
+  "CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o.d"
   "Yukon_Solitair"
   "Yukon_Solitair.pdb"
 )

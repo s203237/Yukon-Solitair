@@ -85,12 +85,12 @@ clean: CMakeFiles/Yukon_Solitair.dir/clean
 CMakeFiles/Yukon_Solitair.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Yukon_Solitair.dir/build.make CMakeFiles/Yukon_Solitair.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Yukon_Solitair.dir/build.make CMakeFiles/Yukon_Solitair.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4,5,6 "Built target Yukon_Solitair"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4,5,6,7 "Built target Yukon_Solitair"
 .PHONY : CMakeFiles/Yukon_Solitair.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Yukon_Solitair.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" 6
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Yukon_Solitair.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" 0
 .PHONY : CMakeFiles/Yukon_Solitair.dir/rule
@@ -102,7 +102,7 @@ Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/rule
 # codegen rule for target.
 CMakeFiles/Yukon_Solitair.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Yukon_Solitair.dir/build.make CMakeFiles/Yukon_Solitair.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4,5,6 "Finished codegen for target Yukon_Solitair"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4,5,6,7 "Finished codegen for target Yukon_Solitair"
 .PHONY : CMakeFiles/Yukon_Solitair.dir/codegen
 
 # clean rule for target.

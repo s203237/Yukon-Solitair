@@ -18,4 +18,6 @@ add_executable(Yukon_Solitair
         "src/utils.c"
 
         gui_py/Client.py
-        gui_py/gui.py)
+        gui_py/gui.py
+        src/yokon.dSYM/server.c
+        src/yokon.dSYM/server.h)
