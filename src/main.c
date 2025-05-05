@@ -26,6 +26,16 @@ int main() {
     printf("%s\n", boardHasCard(board) ? "true" : "false");
     return 0;*/
     loadFromFile("src/cards.txt", board);
+    cardLocation loc = locateSpecificCard(board, "8S");
+    printf("%c%c located at col %i, row %i\n", loc.card->rank,loc.card->suit, loc.col, loc.row);
+    loc = locateSpecificCard(board, "TC");
+    printf("%c%c located at col %i, row %i\n", loc.card->rank,loc.card->suit, loc.col, loc.row);
+    moveCard(board, loc.card, 5, 3);
+    loc = locateSpecificCard(board, "8S");
+    printf("%c%c located at col %i, row %i\n", loc.card->rank,loc.card->suit, loc.col, loc.row);
+    loc = locateSpecificCard(board, "TC");
+    printf("%c%c located at col %i, row %i\n", loc.card->rank,loc.card->suit, loc.col, loc.row);
+
 }
     /*initGame();
 

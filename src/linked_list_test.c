@@ -25,6 +25,11 @@ typedef struct header {
     Foundation* foundationTail;
 }Board;
 
+typedef struct {
+    Card* card;
+    int col;
+    int row;
+} cardLocation;
 
 Board* initBoard() {
     Board* gameBoard = malloc(sizeof(Board));
@@ -208,8 +213,6 @@ void loadFromFile(const char* path, const Board* board) {
                         emptyBoard(board);
                         return;
                     }
-                    //Validate and add
-                    //if invalid empty board that is being filled and error
                 } else {
                     printf("Too many lines in this file");
                     emptyBoard(board);
@@ -238,17 +241,62 @@ void loadFromFile(const char* path, const Board* board) {
 
 
 
-void moveCard(Card* card) { //Also pass target location somehow
-    //check if legal move
-    //unlink card from current position
-    //attach to new position
-    //else throw error
+void moveCard(const Board* board, Card* card, const int targetCol, const int targetRow) {
+    card->prev->next = card->next;
+    card->next->prev = card->prev;
+
+    const Column* curr_col = board->head;
+    if (targetRow <= 0 || targetRow > 13 || targetCol <= 0 || targetCol > 7) {
+        printf("Col %d, row %d is outside of the playable board\n", targetCol, targetRow);
+        return;
+    }
+    for (int i = 0; i < targetCol; i++) {
+        if (curr_col->next == board->tail) {
+            if (i == targetCol - 1) {
+                break;
+            } else {
+                printf("col out of bounds");
+                return;
+            }
+        }
+        curr_col = curr_col->next;
+    }
+
+    Card* curr_node = curr_col->head;
+    for (int j = 0; j < targetRow; j++) {
+        if (curr_node->next == curr_col->tail) {
+            if (j == targetRow - 1) {
+                break;
+            } else {
+                printf("_____________________\nThere are not enough cards in col %d to add a card at row %d.\n_____________________\n",targetCol, targetRow);
+                return;
+            }
+        }
+        curr_node = curr_node->next;
+
+    }
+    card->next = curr_node->next;
+    card->prev = curr_node;
+    curr_node->next->prev = card;
+    curr_node->next = card;
 }
 
-/*Card* locateCard(int col, int row) {
-    Card* temp = NULL;
-    for (int i = 0; i < col; i++) {
-        temp =  Deck
+cardLocation locateSpecificCard(const Board* board, const char* id) {
+    cardLocation result = { .card = NULL, .col = 0, .row = 0};
+    int colIdx = 0, rowIdx = 0;
+    for (const Column* col = board->head->next; col != board->tail; col = col->next) {
+        colIdx++;
+        rowIdx = 0;
+        for (Card* temp = col->head->next; temp != col->tail; temp = temp->next) {
+            rowIdx++;
+            if (temp->rank == id[0] && temp->suit == id[1]) {
+                result.card = temp;
+                result.col = colIdx;
+                result.row = rowIdx;
+                return result;
+            }
+        }
+
     }
-    return card;
-}*/
+    return result;
+}
