@@ -47,12 +47,12 @@ while running:
             #Go backwords through cards to find the top card under the mouse.
             for column in reversed(columns):
                 for card in reversed(column):
-                    if card.rect.collidepoint(mx, my) and card.fae:up:
-                    selected_card = card
-                    offset_x = mx - card.rect.x
-                    offset_y = my - card.rect.y
-                    dragging = True
-                    break
+                    if card.rect.collidepoint(mx, my) and card.face_up:
+                        selected_card = card
+                        offset_x = mx - card.rect.x
+                        offset_y = my - card.rect.y
+                        dragging = True
+                        break
                 if dragging:
                     break
 
