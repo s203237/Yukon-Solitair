@@ -231,17 +231,6 @@ void loadFromFile(const char* path, const Board* board) {
     }
 }
 
-/*void loadCommand(FILE* file, Board* board) {
-    if (boardHasCard(board)) {
-        emptyBoard(board);
-        loadFromFile(file, board);
-    } else {
-        loadFromFile(file, board);
-    }
-}*/
-
-
-
 void moveCard(const Board* board, Card* card, const int targetCol, const int targetRow) {
     card->prev->next = card->next;
     card->next->prev = card->prev;
@@ -396,5 +385,34 @@ void shuffleRandom(Board* board) {
     } else {
         printf("Unable to shuffle as the board is empty");
     }
+}
 
+void saveDeck(const Board* board, const char* path) {
+    Card* deck[52] = {NULL};
+    FILE* file = NULL;
+    if (boardHasCard(board)) {
+        flattenBoard(board, deck);
+            if (path) {
+                file = fopen(path, "w");
+                fprintf(file, "%c%c\n", deck[0]->rank, deck[0]->suit);
+                file = fopen(path, "a");
+                for (int i = 1; i < 52; ++i) {
+                    fprintf(file, "%c%c\n", deck[i]->rank, deck[i]->suit);
+                }
+            } else {
+                file = fopen("cards.txt", "w");
+                fprintf(file, "%c%c\n", deck[0]->rank, deck[0]->suit);
+                file = fopen("cards.txt", "a");
+                for (int i = 1; i < 52; ++i) {
+                    fprintf(file, "%c%c\n", deck[i]->rank, deck[i]->suit);
+                }
+            }
+    }
+}
+
+void exitProgram(Board* board) {
+    if (boardHasCard(board)) {
+        emptyBoard(board);
+    }
+    exit(0);
 }
