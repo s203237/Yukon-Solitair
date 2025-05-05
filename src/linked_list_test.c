@@ -4,6 +4,7 @@
 #include "card.c"
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 
 typedef struct column {
     Card* head;
@@ -342,9 +343,8 @@ void flattenBoard(const Board* board, Card* deck[52]) {
     }
 }
 
-void moveDeck(Board* board, Card* deck[52]) {
+void moveDeck(const Board* board, Card* deck[52]) {
     int row = 0, colIdx = 1;
-    Column* col = board->head->next;
     for (int i = 0; i < 52; ++i) {
         moveCard(board, deck[i], colIdx, row+1);
 
@@ -355,7 +355,7 @@ void moveDeck(Board* board, Card* deck[52]) {
     }
 }
 
-void splitShuffle(Board* board, int split) {
+void splitShuffle(const Board* board, int split) {
     Card* deck[52]= {NULL};
     if (boardHasCard(board)) {
         flattenBoard(board, deck);
@@ -372,6 +372,27 @@ void splitShuffle(Board* board, int split) {
             if (rightIdx < rightLen) deck[deckIdx++] = rightSplit[rightIdx++];
         }
         moveDeck(board, deck);
+    } else {
+        printf("Unable to shuffle as the board is empty");
+    }
+}
+
+void shuffleRandom(Board* board) {
+    srand((unsigned)&board + (unsigned)clock());
+    Card* deck[52] = {NULL};
+    if (boardHasCard(board)) {
+        flattenBoard(board, deck);
+        Card* shuffledDeck[52] = {NULL};
+        int size = 0;
+        for (int i = 0; i < 52; ++i) {
+            int pos = rand() % (size +1);
+            if (size > pos) {
+                memmove(shuffledDeck + pos + 1, shuffledDeck + pos, (size - pos) * sizeof(Card*));
+            }
+            shuffledDeck[pos] = deck[i];
+            ++size;
+        }
+        moveDeck(board, shuffledDeck);
     } else {
         printf("Unable to shuffle as the board is empty");
     }

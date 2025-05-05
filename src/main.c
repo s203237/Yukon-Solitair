@@ -27,6 +27,7 @@ int main() {
     return 0;*/
     loadFromFile("src/cards.txt", board);
     splitShuffle(board, 26);
+    shuffleRandom(board);
     cardLocation loc = locateSpecificCard(board, "AC");
     printf("%c%c located at col %i, row %i, %s\n", loc.card->rank,loc.card->suit, loc.col, loc.row, loc.card->faceUp ? "true" : "false");
     loc = locateSpecificCard(board, "2C");
