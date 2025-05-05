@@ -20,7 +20,12 @@
 int main() {
     // Initialiser spillet
     initGame();
-    deck = createFullDeck();  // Hvis du har en funktion til dette
+
+    if (!loadDeckFromFile("cards.txt")) {
+        fprintf(stderr, "Failed to load file.\n");
+        return 1;
+    }
+
     shuffleDeckRandom();
     dealCards();
     showAllCards();  // Vend alle kort op (kan fjernes hvis du bruger regler)
