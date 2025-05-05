@@ -1,0 +1,1 @@
+CMakeLists.txt not found in /Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair Select CMakeLists.txt
