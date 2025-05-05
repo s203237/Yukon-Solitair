@@ -18,6 +18,7 @@ void shuffleDeckRandom();
 void shuffleDeckSplit(int split);
 void moveCard(int fromCol, char rank, char suit, int toCol);
 void printBoard();
+char* getBoardString();
 
 
 #endif
