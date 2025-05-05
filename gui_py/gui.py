@@ -1,56 +1,59 @@
 import pygame
 import sys
+from cards import Card              # <- Din Card-klasse (vi laver næste)
+from client import connect_to_server, send_command  # <- socket-klient
 
 pygame.init()
 
-# Vinduesstørrelse
+# Windouws size and set up.
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Yukon Solitaire")
-
-# Farver
-BG_COLOR = (40, 80, 120)
-
-# FPS
 clock = pygame.time.Clock()
 
-# Hovedloop
+# Colors and bagground.
+BG_COLOR = (40, 80, 120)
+
+# Connection to C-server.
+sock = connect_to_server()
+
+# Funktion par answer from C and make connection.
+def parse_cards(response):
+    columns = []
+    lines = response.strip().split('\n')
+    for col_index, line in enumerate(lines):
+        column = []
+        cards = line.strip().split()
+        for row_index, code in enumerate(cards):
+            rank = code[:-1]
+            suit = code[-1]
+            x = 50 + col_index * 100
+            y = 50 + row_index * 30
+            card = Card(suit, rank, x, y, face_up=True)
+            column.append(card)
+        columns.append(column)
+    return columns
+
+# Get initial game state from C.
+response = send_command(sock, "GET\n")
+columns = parse_cards(response)
+
+# Main loop.
 running = True
 while running:
+    screen.fill(BG_COLOR)
+
+    # Draw all cards.
+    for column in columns:
+        for card in column:
+            card.draw(screen)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill(BG_COLOR)
     pygame.display.flip()
     clock.tick(60)
 
 pygame.quit()
 sys.exit()
-
-dragging = False
-card_pos = [100, 100]
-
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            mx, my = pygame.mouse.get_pos()
-            if card_rect.collidepoint(mx, my):
-                dragging = True
-                offset_x = card_pos[0] - mx
-                offset_y = card_pos[1] - my
-
-        elif event.type == pygame.MOUSEBUTTONUP:
-            dragging = False
-
-        elif event.type == pygame.MOUSEMOTION and dragging:
-            mx, my = pygame.mouse.get_pos()
-            card_pos = [mx + offset_x, my + offset_y]
-
-    screen.fill(BG_COLOR)
-    card_rect = screen.blit(card_img, card_pos)
-    pygame.display.flip()
-    clock.tick(60)
