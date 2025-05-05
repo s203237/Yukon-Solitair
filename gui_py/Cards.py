@@ -9,6 +9,7 @@ RED = (200, 0, 0)
 GRAY = (120, 120, 120)
 
 class Card:
+    FONT = None
     def __init__(self, suit, rank, x, y, face_up=True):
         self.suit = suit  # 'H', 'S', 'C', 'D'
         self.rank = rank  # 'A', '2', ..., 'K'
