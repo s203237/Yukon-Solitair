@@ -283,20 +283,97 @@ void moveCard(const Board* board, Card* card, const int targetCol, const int tar
 
 cardLocation locateSpecificCard(const Board* board, const char* id) {
     cardLocation result = { .card = NULL, .col = 0, .row = 0};
-    int colIdx = 0, rowIdx = 0;
-    for (const Column* col = board->head->next; col != board->tail; col = col->next) {
-        colIdx++;
-        rowIdx = 0;
-        for (Card* temp = col->head->next; temp != col->tail; temp = temp->next) {
-            rowIdx++;
-            if (temp->rank == id[0] && temp->suit == id[1]) {
-                result.card = temp;
-                result.col = colIdx;
-                result.row = rowIdx;
-                return result;
+    if (boardHasCard(board)) {
+        int colIdx = 0, rowIdx = 0;
+        for (const Column* col = board->head->next; col != board->tail; col = col->next) {
+            colIdx++;
+            rowIdx = 0;
+            for (Card* temp = col->head->next; temp != col->tail; temp = temp->next) {
+                rowIdx++;
+                if (temp->rank == id[0] && temp->suit == id[1]) {
+                    result.card = temp;
+                    result.col = colIdx;
+                    result.row = rowIdx;
+                    return result;
+                }
+            }
+
+        }
+    } else {
+        printf("Unable to locate card as the board is empty");
+    }
+
+    return result;
+}
+
+void showAll(const Board* board) {
+    if (boardHasCard(board)) {
+        for (const Column* col = board->head->next; col != board->tail; col = col->next) {
+            for (Card* temp = col->head->next; temp != col->tail; temp = temp->next) {
+                temp->faceUp = true;
             }
         }
-
     }
-    return result;
+
+}
+
+void flattenBoard(const Board* board, Card* deck[52]) {
+    int i = 0;
+    int row = 0;
+    while (i < 52) {
+        int cardsThisRow = 0;
+
+        for (const Column* col = board->head->next; col != board->tail; col = col->next) {
+            Card* temp = col->head->next;
+            int tempRow = 0;
+            while (tempRow < row && temp != col->tail) {
+                temp = temp->next;
+                ++tempRow;
+            }
+            if (temp != col->tail) {
+                deck[i++] = temp;
+                ++cardsThisRow;
+            }
+        }
+        if (cardsThisRow == 0) {
+            break;
+        }
+        ++row;
+    }
+}
+
+void moveDeck(Board* board, Card* deck[52]) {
+    int row = 0, colIdx = 1;
+    Column* col = board->head->next;
+    for (int i = 0; i < 52; ++i) {
+        moveCard(board, deck[i], colIdx, row+1);
+
+        if (++colIdx > 7) {
+            colIdx = 1;
+            ++row;
+        }
+    }
+}
+
+void splitShuffle(Board* board, int split) {
+    Card* deck[52]= {NULL};
+    if (boardHasCard(board)) {
+        flattenBoard(board, deck);
+        if (split < 0 || split > 52) split = 26;
+        Card* leftSplit[52];
+        Card* rightSplit[52];
+        const int leftLen = split;
+        const int rightLen = 52 - split;
+        memcpy(leftSplit, deck, leftLen * sizeof(Card*));
+        memcpy(rightSplit, deck + leftLen, rightLen * sizeof(Card*));
+        int leftIdx = 0, rightIdx = 0, deckIdx = 0;
+        while (leftIdx < leftLen || rightIdx < rightLen) {
+            if (leftIdx < leftLen) deck[deckIdx++] = leftSplit[leftIdx++];
+            if (rightIdx < rightLen) deck[deckIdx++] = rightSplit[rightIdx++];
+        }
+        moveDeck(board, deck);
+    } else {
+        printf("Unable to shuffle as the board is empty");
+    }
+
 }
