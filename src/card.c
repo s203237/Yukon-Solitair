@@ -10,6 +10,7 @@ Card* createCard(char rank, char suit, bool faceUp){
     newCard ->suit =suit;
     newCard -> faceUp =faceUp;
     newCard -> next =NULL;
+    newCard->prev =NULL;
     return newCard;
 }
 //free the entire linked list
