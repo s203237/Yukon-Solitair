@@ -1,23 +1,15 @@
 cmake_minimum_required(VERSION 3.15)
-project(Yukon_Solitair)
+project(Yukon_Solitair C)
 
 set(CMAKE_C_STANDARD 11)
 
-include_directories(.)
-include_directories("src")
-include_directories(gui_py)
+include_directories(src)
 
 add_executable(Yukon_Solitair
-        "src/card.c"
 
-        "src/game.c"
-
-        "src/io.c"
-
-        "src/main.c"
-        "src/utils.c"
-
-        gui_py/Client.py
-        gui_py/gui.py
-        src/yokon.dSYM/server.c
-        src/yokon.dSYM/server.h)
+        src/server.c
+        src/game.c
+        src/card.c
+        src/io.c
+        src/utils.c
+)
