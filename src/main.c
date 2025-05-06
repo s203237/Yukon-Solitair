@@ -10,12 +10,16 @@ int main() {
     commandCenter(board, " ");
     while (1) {
         char input[128];
-        scanf("%s", input);
+        fflush(stdout);
+
+        if (!fgets(input, sizeof input, stdin)) {
+            break;
+        }
         commandCenter(board, input);
     }
-    commandCenter(board, "LD");
+    /*commandCenter(board, "LD");
     commandCenter(board, "SW");
-    commandCenter(board, "SR");
+    commandCenter(board, "SR");*/
     }
 
     /*initGame();

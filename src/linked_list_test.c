@@ -399,7 +399,6 @@ void splitShuffle(const Board* board, int split) {
             if (leftIdx < leftLen) deck[deckIdx++] = leftSplit[leftIdx++];
             if (rightIdx < rightLen) deck[deckIdx++] = rightSplit[rightIdx++];
         }
-        printf(deck);
         moveDeck(board, deck);
         setMessage(board, "OK");
     } else {
@@ -535,12 +534,20 @@ void displayBoard(const Board* board, char* lastCommand) {
 void commandCenter(Board* board, char* input) {
 
     char copy[128];
+    char saved[128];
     char* lastCommand = NULL;
+
     strncpy(copy, input, 128);
     copy[sizeof(copy)-1] = '\0';
+    strncpy(saved, input, sizeof saved);
+    saved[sizeof saved - 1] = '\0';
 
     copy[strcspn(copy, "\n")] = '\0';
     for (char* c = copy; *c; ++c) {
+        *c = (char)toupper((unsigned char)*c);
+    }
+    saved[strcspn(saved, "\n")] = '\0';
+    for (char* c = saved; *c; ++c) {
         *c = (char)toupper((unsigned char)*c);
     }
 
@@ -555,7 +562,6 @@ void commandCenter(Board* board, char* input) {
     } else {
         rest = NULL;
     }
-
     if (strcmp(cmd, "LD") == 0) {
         emptyBoard(board);
         loadFromFile(rest, board);
@@ -576,6 +582,6 @@ void commandCenter(Board* board, char* input) {
     if (strcmp(cmd, "QQ") == 0) {
         exitProgram(board);
     }
-    lastCommand = copy;
+    lastCommand = saved;
     displayBoard(board, lastCommand);
 }
