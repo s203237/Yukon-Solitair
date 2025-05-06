@@ -19,6 +19,10 @@ void shuffleDeckSplit(int split);
 void moveCard(int fromCol, char rank, char suit, int toCol);
 void printBoard();
 void printDeckAsGrid(Card* deck);
+char* getBoardString();
+void dealCardsForPlayPhase(Board* board, Card* deck);
+void dealDeckForGridView(Board* board, Card* deck);
+
 
 
 #endif

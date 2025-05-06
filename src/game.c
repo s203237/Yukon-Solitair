@@ -323,6 +323,42 @@ void printBoard(Board* board) {
     }
     printf("\n");
 }
+    char* getBoardString() {
+        static char buffer[2048];
+        buffer[0] = '\0';  //
+
+        // Columns
+        for (int col = 0; col < NUM_COLUMNS; col++) {
+            Card* card = columns[col];
+            while (card) {
+                if (card->faceUp) {
+                    char cardStr[4];
+                    snprintf(cardStr, sizeof(cardStr), "%c%c ", card->rank, card->suit);
+                    strcat(buffer, cardStr);
+                } else {
+                    strcat(buffer, "[] ");
+                }
+                card = card->next;
+            }
+            strcat(buffer, "\n");
+        }
+
+        // Foundations
+        strcat(buffer, "---\n");
+        for (int f = 0; f < NUM_FOUNDATIONS; f++) {
+            if (foundations[f] && foundations[f]->faceUp) {
+                char fStr[4];
+                snprintf(fStr, sizeof(fStr), "%c%c ", foundations[f]->rank, foundations[f]->suit);
+                strcat(buffer, fStr);
+            } else {
+                strcat(buffer, "__ ");
+            }
+        }
+        strcat(buffer, "\n");
+
+        return buffer;
+    }
+
 
 
 

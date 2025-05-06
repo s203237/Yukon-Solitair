@@ -1,4 +1,4 @@
 /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/bin/make -G "Unix Makefiles" -DPython_EXECUTABLE=/usr/bin/python3 -DPython3_EXECUTABLE=/usr/bin/python3 -S "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair" -B "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug"
--- Configuring done (0.0s)
+-- Configuring done (0.1s)
 -- Generating done (0.0s)
 -- Build files have been written to: /Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug
