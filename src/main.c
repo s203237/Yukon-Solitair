@@ -7,37 +7,17 @@
 
 int main() {
     Board* board = initBoard();
-    /*printf("Board initialized\n");
-    Card* sampleCard = createCard('T', 'C', false);
-    Card* sampleCard2 = createCard('J', 'C', false);
-    printf("card created: %c of %c\n", sampleCard->rank, sampleCard->suit);
-    int status = addCard(board, sampleCard, 4, 1);
-    if (status) {
-        printf("card added\n");
+    commandCenter(board, " ");
+    while (1) {
+        char input[128];
+        scanf("%s", input);
+        commandCenter(board, input);
     }
-    status = addCard(board, sampleCard2, 4, 2);
-    if (status) {
-        printf("card added\n");
+    commandCenter(board, "LD");
+    commandCenter(board, "SW");
+    commandCenter(board, "SR");
     }
-    //printf("%c, %c exists\n", board->head->next->next->next->next->head->next->next->rank, board->head->next->next->next->next->head->next->next->suit);
-    printf("%s\n", boardHasCard(board) ? "true" : "false");
-    emptyBoard(board);
-    printf("board should be empty\n");
-    printf("%s\n", boardHasCard(board) ? "true" : "false");
-    return 0;*/
-    loadFromFile("src/cards.txt", board);
-    splitShuffle(board, 26);
-    cardLocation loc = locateSpecificCard(board, "AC");
-    printf("%c%c located at col %i, row %i, %s\n", loc.card->rank,loc.card->suit, loc.col, loc.row, loc.card->faceUp ? "true" : "false");
-    loc = locateSpecificCard(board, "2C");
-    printf("%c%c located at col %i, row %i\n", loc.card->rank,loc.card->suit, loc.col, loc.row);
-    loc = locateSpecificCard(board, "AH");
-    printf("%c%c located at col %i, row %i, %s\n", loc.card->rank,loc.card->suit, loc.col, loc.row, loc.card->faceUp ? "true" : "false");
-    loc = locateSpecificCard(board, "2H");
-    printf("%c%c located at col %i, row %i\n", loc.card->rank,loc.card->suit, loc.col, loc.row);
-    saveDeck(board, NULL);
 
-}
     /*initGame();
 
     char input[100];// save user input command

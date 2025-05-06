@@ -1,3 +1,5 @@
+#include <ctype.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "card.h"
@@ -19,11 +21,13 @@ typedef struct foundation {
     struct foundation* prev;
 }Foundation;
 
-typedef struct header {
+typedef struct {
     Column* head;
     Column* tail;
     Foundation* foundationHead;
     Foundation* foundationTail;
+
+    char msg[256];
 }Board;
 
 typedef struct {
@@ -77,7 +81,15 @@ Board* initBoard() {
         curr_f = newFoundation;
 
     }
+    gameBoard->msg[0] = '\0';
     return gameBoard;
+}
+
+void setMessage(const Board* board, const char* fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    vsnprintf(board->msg, 256, fmt, args);
+    va_end(args);
 }
 
 int addCard(const Board* board, Card* card, const int col, const int row) {
@@ -133,11 +145,9 @@ bool boardHasCard(const Board* board) {
 
 void emptyBoard(const Board* board) {
     for (const Column* col = board->head->next; col != board->tail; col = col->next) {
-        printf("Emptying column %p (head=%p, tail=%p)\n", (void*)col, (void*)col->head, (void*)col->tail);
         Card* card = col->head->next;
         while(card != col->tail) {
                 Card* nextCard = card->next;
-                printf("  freeing card %p (->next = %p)\n", (void*)card, (void*)nextCard);
                 free(card);
                 card = nextCard;
         }
@@ -156,20 +166,43 @@ void emptyBoard(const Board* board) {
     }
 }
 
-void loadFromFile(const char* path, const Board* board) {
+void createDefaultDeck(const Board* board) {
+    int col = 1, row = 1;
+
+    for (int suit = 0; suit < 4; ++suit) {
+        for (int rank = 0; rank < 13; ++rank) {
+            const char* suits = "CDHS";
+            const char* ranks = "A23456789TJQK";
+            Card* card = createCard(ranks[rank], suits[suit], false);
+            addCard(board, card, col, row);
+
+            if (++col > 7) {
+                col = 1;
+                ++row;
+            }
+        }
+    }
+}
+
+bool loadFromFile(const char* path, const Board* board) {
     bool seen[52] = {false};
 
     FILE* file = NULL;
+    if (!path) {
+        createDefaultDeck(board);
+        setMessage(board, "OK");
+        return true;
+    }
     if (access(path, F_OK) == 0) {
         if (access(path, R_OK) == 0) {
             file = fopen(path, "r");
         } else {
-            printf("Could not read from this file");
-            return;
+            setMessage(board, "Could not read from this file");
+            return false;
         }
     } else {
-        printf("File doesn't exist");
-        return;
+        setMessage(board, "File does not exist");
+        return false;
     }
     if (file) {
         int col = 1, row = 1;
@@ -186,23 +219,22 @@ void loadFromFile(const char* path, const Board* board) {
                         char* rp = strchr(ranks, rank);
                         char* sp = strchr(suits, suit);
                         if (!rp || !sp) {
-                            printf("There is an illegal card %s on line %i", line, i);
+                            setMessage(board,"There is an illegal card %s on line %i", line, i);
                             emptyBoard(board);
-                            return;
+                            return false;
                         }
                         int rankidx = (int)(rp - ranks);
                         int suitidx = (int)(sp - suits);
                         int idx = suitidx * 13 + rankidx;
 
                         if (seen[idx]) {
-                            printf("Duplicate card at line %i", i);
+                            setMessage(board, "Duplicate card at line %i", i);
                             emptyBoard(board);
-                            return;
+                            return false;
                         } else {
                             seen[idx] = true;
                             Card* card = createCard(rank, suit, false);
                             addCard(board, card, col, row);
-                            printf("The card %c of %c has been added at col %i, row %i\n", card->rank, card->suit, col, row);
                             col++;
                             if (col > 7) {
                                 col = 1;
@@ -210,25 +242,28 @@ void loadFromFile(const char* path, const Board* board) {
                             }
                         }
                     } else {
-                        printf("line %i contains an invalid card %s that is either too long or short\n", i, line);
+                        setMessage(board, "line %i contains an invalid card \"%s\"", i, line);
                         emptyBoard(board);
-                        return;
+                        return false;
                     }
                 } else {
-                    printf("Too many lines in this file");
+                    setMessage(board,"Too many lines in this file");
                     emptyBoard(board);
-                    return;
+                    return false;
                 }
             } else if (i < 52) {
-                printf("There is only %i lines in this file", i-1);
+                setMessage(board,"There are only %i lines in this file", i-1);
                 emptyBoard(board);
-                return;
+                return false;
             }
 
         }
     } else {
-        printf("Something went wrong while loading the file");
+        setMessage(board, "Something went wrong while loading the file");
+        return false;
     }
+    setMessage(board, "OK");
+    return true;
 }
 
 void moveCard(const Board* board, Card* card, const int targetCol, const int targetRow) {
@@ -245,7 +280,7 @@ void moveCard(const Board* board, Card* card, const int targetCol, const int tar
             if (i == targetCol - 1) {
                 break;
             } else {
-                printf("col out of bounds");
+                printf("col out of bounds\n");
                 return;
             }
         }
@@ -290,7 +325,8 @@ cardLocation locateSpecificCard(const Board* board, const char* id) {
 
         }
     } else {
-        printf("Unable to locate card as the board is empty");
+        printf("Unable to locate card as the board is empty\n");
+        return result;
     }
 
     return result;
@@ -303,6 +339,9 @@ void showAll(const Board* board) {
                 temp->faceUp = true;
             }
         }
+        setMessage(board, "OK");
+    } else {
+        setMessage(board, "No deck is loaded");
     }
 
 }
@@ -348,7 +387,7 @@ void splitShuffle(const Board* board, int split) {
     Card* deck[52]= {NULL};
     if (boardHasCard(board)) {
         flattenBoard(board, deck);
-        if (split < 0 || split > 52) split = 26;
+        if (split < 0 || split > 52 || !split) split = rand() % 51 + 1;
         Card* leftSplit[52];
         Card* rightSplit[52];
         const int leftLen = split;
@@ -360,9 +399,11 @@ void splitShuffle(const Board* board, int split) {
             if (leftIdx < leftLen) deck[deckIdx++] = leftSplit[leftIdx++];
             if (rightIdx < rightLen) deck[deckIdx++] = rightSplit[rightIdx++];
         }
+        printf(deck);
         moveDeck(board, deck);
+        setMessage(board, "OK");
     } else {
-        printf("Unable to shuffle as the board is empty");
+        setMessage(board, "No deck is loaded");
     }
 }
 
@@ -383,7 +424,7 @@ void shuffleRandom(Board* board) {
         }
         moveDeck(board, shuffledDeck);
     } else {
-        printf("Unable to shuffle as the board is empty");
+        printf("Unable to shuffle as the board is empty\n");
     }
 }
 
@@ -407,12 +448,134 @@ void saveDeck(const Board* board, const char* path) {
                     fprintf(file, "%c%c\n", deck[i]->rank, deck[i]->suit);
                 }
             }
+        setMessage(board, "OK");
+    } else {
+        setMessage(board, "No deck is loaded");
     }
 }
 
-void exitProgram(Board* board) {
+void exitProgram(const Board* board) {
     if (boardHasCard(board)) {
         emptyBoard(board);
     }
     exit(0);
+}
+
+int findMaxRows(const Board* board) {
+    int max = 0;
+        for (const Column* col = board->head->next; col != board->tail; col = col->next) {
+            int rows = 0;
+            for (Card* card = col->head->next; card != col->tail; card = card->next) {
+                ++rows;
+            }
+            if (rows > max) {
+                max = rows;
+            }
+        }
+    return max;
+}
+
+void displayBoardState(const Board* board) {
+    int maxRows = findMaxRows(board);
+    if (maxRows < 7) {
+        maxRows = 7;
+    }
+
+    printf("c1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
+    for (int row = 0; row < maxRows; ++row) {
+        for (const Column* col = board->head->next; col != board->tail; col = col->next) {
+            const Card* card = col->head->next;
+            int r = 0;
+            while (r<row && card != col->tail) {
+                card = card->next;
+                ++r;
+            }
+            if (card != col->tail) {
+                if (card->faceUp == true) {
+                    printf("%c%c\t", card->rank, card->suit);
+                } else {
+                    printf("[]\t");
+                }
+            } else {
+                printf("  \t");
+            }
+
+        }
+        if (row%2 == 0 && row/2 < 4) {
+            putchar('\t');
+            int fIdx = row/2;
+            Foundation* f = board->foundationHead->next;
+            for (int i = 0;i < fIdx && f != board->foundationTail; ++i) {
+                f = f->next;
+            }
+            const Card* top = (f != board->foundationTail && f->tail->prev != f->head ) ? f->tail->prev : NULL;
+            if (top) {
+                putchar(top->rank); putchar(top->suit); putchar('\t'); putchar('F'); putchar('1'+fIdx);
+            } else {
+                putchar('['); putchar(']'); putchar('\t'); putchar('F'); putchar('1'+fIdx);
+            }
+
+        }
+        putchar('\n');
+    }
+}
+
+void displayBoard(const Board* board, char* lastCommand) {
+    printf("\033[H\033[2J\n");
+    displayBoardState(board);
+    printf("\nLAST Command: %s\n", lastCommand);
+    if (board->msg[0] != '\0') {
+        printf("Message: %s\n", board->msg);
+    } else {
+        printf("Message:\n");
+    }
+    printf("INPUT > ");
+}
+
+void commandCenter(Board* board, char* input) {
+
+    char copy[128];
+    char* lastCommand = NULL;
+    strncpy(copy, input, 128);
+    copy[sizeof(copy)-1] = '\0';
+
+    copy[strcspn(copy, "\n")] = '\0';
+    for (char* c = copy; *c; ++c) {
+        *c = (char)toupper((unsigned char)*c);
+    }
+
+    char* cmd = copy;
+    char* rest = cmd + strcspn(cmd, " \t");
+
+    if (*rest) {
+        *rest++ = '\0';
+        while (*rest == ' ' || *rest == '\t') {
+            ++rest;
+        }
+    } else {
+        rest = NULL;
+    }
+
+    if (strcmp(cmd, "LD") == 0) {
+        emptyBoard(board);
+        loadFromFile(rest, board);
+    }
+
+    if (strcmp(cmd, "SW") == 0) {
+        showAll(board);
+    }
+    if (strcmp(cmd, "SI") == 0) {
+        splitShuffle(board, atoi(rest));
+    }
+    if (strcmp(cmd, "SR") == 0) {
+        shuffleRandom(board);
+    }
+    if (strcmp(cmd, "SD") == 0) {
+        saveDeck(board, rest);
+    }
+    if (strcmp(cmd, "QQ") == 0) {
+        exitProgram(board);
+    }
+    lastCommand = copy;
+    displayBoard(board, lastCommand);
 }
