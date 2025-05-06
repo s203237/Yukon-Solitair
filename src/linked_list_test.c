@@ -435,9 +435,11 @@ void saveDeck(const Board* board, const char* path) {
             if (path) {
                 file = fopen(path, "w");
                 fprintf(file, "%c%c\n", deck[0]->rank, deck[0]->suit);
+                fclose(file);
                 file = fopen(path, "a");
                 for (int i = 1; i < 52; ++i) {
                     fprintf(file, "%c%c\n", deck[i]->rank, deck[i]->suit);
+                    printf("attempted to save: %c%c\n", deck[i]->rank, deck[i]->suit);
                 }
             } else {
                 file = fopen("cards.txt", "w");
@@ -447,6 +449,7 @@ void saveDeck(const Board* board, const char* path) {
                     fprintf(file, "%c%c\n", deck[i]->rank, deck[i]->suit);
                 }
             }
+        fclose(file);
         setMessage(board, "OK");
     } else {
         setMessage(board, "No deck is loaded");
@@ -546,6 +549,7 @@ void commandCenter(Board* board, char* input) {
     for (char* c = copy; *c; ++c) {
         *c = (char)toupper((unsigned char)*c);
     }
+
     saved[strcspn(saved, "\n")] = '\0';
     for (char* c = saved; *c; ++c) {
         *c = (char)toupper((unsigned char)*c);
@@ -577,11 +581,18 @@ void commandCenter(Board* board, char* input) {
         shuffleRandom(board);
     }
     if (strcmp(cmd, "SD") == 0) {
+        if (rest) {
+            for (char* c = rest; *c; ++c) {
+                *c = (char)tolower((unsigned char)*c);
+            }
+        }
+        printf("%s\n\n", rest);
         saveDeck(board, rest);
     }
     if (strcmp(cmd, "QQ") == 0) {
         exitProgram(board);
     }
+
     lastCommand = saved;
     displayBoard(board, lastCommand);
 }
