@@ -595,21 +595,42 @@ void commandCenter(Board* board, char* input) {
         }
     } else {
         rest = NULL;
-    }if (!board->playing) {
-        if (strcmp(cmd, "LD") == 0) {
+    }
+
+    if (strcmp(cmd, "LD") == 0) {
+        if (board->playing) {
+            setMessage(board,"Command not available in the PLAY phase.");
+        } else {
             emptyBoard(board);
             loadFromFile(rest, board);
         }
-        if (strcmp(cmd, "SW") == 0) {
+    }
+    if (strcmp(cmd, "SW") == 0) {
+        if (board->playing) {
+            setMessage(board,"Command not available in the PLAY phase.");
+        } else {
             showAll(board);
         }
-        if (strcmp(cmd, "SI") == 0) {
+    }
+    if (strcmp(cmd, "SI") == 0) {
+        if (board->playing) {
+            setMessage(board,"Command not available in the PLAY phase.");
+        } else {
             splitShuffle(board, atoi(rest));
         }
-        if (strcmp(cmd, "SR") == 0) {
+    }
+    if (strcmp(cmd, "SR") == 0) {
+        if (board->playing) {
+            setMessage(board,"Command not available in the PLAY phase.");
+        } else {
             shuffleRandom(board);
         }
-        if (strcmp(cmd, "SD") == 0) {
+
+    }
+    if (strcmp(cmd, "SD") == 0) {
+        if (board->playing) {
+            setMessage(board,"Command not available in the PLAY phase.");
+        } else {
             if (rest) {
                 for (char* c = rest; *c; ++c) {
                     *c = (char)tolower((unsigned char)*c);
@@ -618,20 +639,29 @@ void commandCenter(Board* board, char* input) {
             printf("%s\n\n", rest);
             saveDeck(board, rest);
         }
-        if (strcmp(cmd, "P") == 0) {
+
+    }
+    if (strcmp(cmd, "P") == 0) {
+        if (board->playing) {
+            setMessage(board,"Command not available in the PLAY phase.");
+        } else {
             beginPlay(board);
             board->playing = true;
         }
     }
+
     if (strcmp(cmd, "QQ") == 0) {
         exitProgram(board);
     }
-    if (board->playing) {
-        if (strcmp(cmd, "Q") == 0) {
+    if (strcmp(cmd, "Q") == 0) {
+        if (board->playing) {
             Card* deck[52] = {NULL};
             flattenBoard(board, deck);
             moveDeck(board, deck);
             board->playing = false;
+            setMessage(board, "OK");
+        } else {
+            setMessage(board, "Command not available in the STARTUP phase.");
         }
     }
 
