@@ -439,11 +439,11 @@ void saveDeck(const Board* board, const char* path) {
                 file = fopen(path, "a");
                 for (int i = 1; i < 52; ++i) {
                     fprintf(file, "%c%c\n", deck[i]->rank, deck[i]->suit);
-                    printf("attempted to save: %c%c\n", deck[i]->rank, deck[i]->suit);
                 }
             } else {
                 file = fopen("cards.txt", "w");
                 fprintf(file, "%c%c\n", deck[0]->rank, deck[0]->suit);
+                fclose(file);
                 file = fopen("cards.txt", "a");
                 for (int i = 1; i < 52; ++i) {
                     fprintf(file, "%c%c\n", deck[i]->rank, deck[i]->suit);
