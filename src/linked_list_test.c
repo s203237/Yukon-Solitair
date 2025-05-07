@@ -28,6 +28,7 @@ typedef struct {
     Foundation* foundationTail;
 
     char msg[256];
+    bool playing;
 }Board;
 
 typedef struct {
@@ -82,6 +83,7 @@ Board* initBoard() {
 
     }
     gameBoard->msg[0] = '\0';
+    gameBoard->playing = false;
     return gameBoard;
 }
 
@@ -456,6 +458,34 @@ void saveDeck(const Board* board, const char* path) {
     }
 }
 
+void beginPlay(const Board* board) {
+    const int col_len[7] = {1, 6, 7, 8, 9, 10, 11};
+    const int hidden[7] = {0, 1, 2, 3, 4, 5, 6};
+    if (!boardHasCard(board)) {
+        setMessage(board, "No deck is loaded");
+        return;
+    }
+    Card* deck[52] = {NULL};
+    flattenBoard(board, deck);
+
+    int idx = 0;
+    int maxRows = col_len[6];
+    for (int row = 0; row < maxRows; ++row) {
+        for (int col = 0; col < 7; ++col) {
+
+            if (row >= col_len[col]) {
+                continue;
+            }
+
+            Card* card = deck[idx++];
+            card->faceUp = (row >= hidden[col]) ? true : false;
+            moveCard(board, card, col+1, row+1);
+        }
+    }
+    setMessage(board, "OK");
+
+}
+
 void exitProgram(const Board* board) {
     if (boardHasCard(board)) {
         emptyBoard(board);
@@ -565,32 +595,44 @@ void commandCenter(Board* board, char* input) {
         }
     } else {
         rest = NULL;
-    }
-    if (strcmp(cmd, "LD") == 0) {
-        emptyBoard(board);
-        loadFromFile(rest, board);
-    }
-
-    if (strcmp(cmd, "SW") == 0) {
-        showAll(board);
-    }
-    if (strcmp(cmd, "SI") == 0) {
-        splitShuffle(board, atoi(rest));
-    }
-    if (strcmp(cmd, "SR") == 0) {
-        shuffleRandom(board);
-    }
-    if (strcmp(cmd, "SD") == 0) {
-        if (rest) {
-            for (char* c = rest; *c; ++c) {
-                *c = (char)tolower((unsigned char)*c);
-            }
+    }if (!board->playing) {
+        if (strcmp(cmd, "LD") == 0) {
+            emptyBoard(board);
+            loadFromFile(rest, board);
         }
-        printf("%s\n\n", rest);
-        saveDeck(board, rest);
+        if (strcmp(cmd, "SW") == 0) {
+            showAll(board);
+        }
+        if (strcmp(cmd, "SI") == 0) {
+            splitShuffle(board, atoi(rest));
+        }
+        if (strcmp(cmd, "SR") == 0) {
+            shuffleRandom(board);
+        }
+        if (strcmp(cmd, "SD") == 0) {
+            if (rest) {
+                for (char* c = rest; *c; ++c) {
+                    *c = (char)tolower((unsigned char)*c);
+                }
+            }
+            printf("%s\n\n", rest);
+            saveDeck(board, rest);
+        }
+        if (strcmp(cmd, "P") == 0) {
+            beginPlay(board);
+            board->playing = true;
+        }
     }
     if (strcmp(cmd, "QQ") == 0) {
         exitProgram(board);
+    }
+    if (board->playing) {
+        if (strcmp(cmd, "Q") == 0) {
+            Card* deck[52] = {NULL};
+            flattenBoard(board, deck);
+            moveDeck(board, deck);
+            board->playing = false;
+        }
     }
 
     lastCommand = saved;
