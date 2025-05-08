@@ -279,7 +279,7 @@ bool loadFromFile(const char* path, const Board* board) {
                     emptyBoard(board);
                     return false;
                 }
-            } else if (i < 52) {
+            } else if (i < 53) {
                 setMessage(board,"There are only %i lines in this file", i-1);
                 emptyBoard(board);
                 return false;
@@ -928,7 +928,6 @@ void commandCenter(Board* board, const char* input) {
                     *c = (char)tolower((unsigned char)*c);
                 }
             }
-            printf("%s\n\n", rest);
             saveDeck(board, rest);
         }
     }
@@ -946,7 +945,8 @@ void commandCenter(Board* board, const char* input) {
     }
     if (strcmp(cmd, "QQ") == 0) {
         exitProgram(board);
-    } else if (strcmp(cmd, "Q") == 0) {
+    }
+    if (strcmp(cmd, "Q") == 0) {
         if (board->playing) {
             Card* deck[52] = {NULL};
             flattenBoard(board, deck);
