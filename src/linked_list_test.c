@@ -14,6 +14,7 @@ typedef struct column {
     struct column* next;
     struct column* prev;
 }Column;
+
 typedef struct foundation {
     Card* head;
     Card* tail;
@@ -36,6 +37,30 @@ typedef struct {
     int col;
     int row;
 } cardLocation;
+
+typedef enum {
+    srcColumnCard,
+    srcColumnBottom,
+    srcFoundationTop
+}srcKind;
+
+typedef enum {
+    dstColumnBottom,
+    dstFoundationTop
+}dstKind;
+
+typedef struct {
+    srcKind sourceKind;
+    dstKind destinationKind;
+
+    Column* srcColumn;
+    Foundation* srcFoundation;
+    Card* srcCard;
+
+    Column* dstColumn;
+    Foundation* dstFoundation;
+
+}parsedMove;
 
 Board* initBoard() {
     Board* gameBoard = malloc(sizeof(Board));
@@ -308,6 +333,27 @@ void moveCard(const Board* board, Card* card, const int targetCol, const int tar
     curr_node->next = card;
 }
 
+Column* nthColumn(const Board* board, int n) {
+    Column* c = board->head->next;
+    while (--n && c != board->tail) {
+        c = c->next;
+    }
+    return (c == board->tail) ? NULL : c;
+}
+
+Foundation* nthFoundation(const Board* board, int n) {
+    Foundation* f = board->foundationHead->next;
+    while (--n && f != board->foundationTail) {
+        f = f->next;
+    }
+    return (f == board->foundationTail) ? NULL : f;
+}
+
+int parseNumber(const char* s, const char** end) {
+    long v = strtol(s, end, 10);
+    return (v>0 && v< INT_MAX) ? (int)v : -1;
+}
+
 cardLocation locateSpecificCard(const Board* board, const char* id) {
     cardLocation result = { .card = NULL, .col = 0, .row = 0};
     if (boardHasCard(board)) {
@@ -333,6 +379,223 @@ cardLocation locateSpecificCard(const Board* board, const char* id) {
 
     return result;
 }
+
+int parsedMoveCommand (const Board* board, const char* raw, parsedMove* out) {
+    const char* ranks   = "A23456789TJQK";
+    const char* suits   = "CDHS";
+    char temp[128];
+    size_t j = 0;
+    for (size_t i = 0; raw[i] && j < sizeof(temp); ++i) {
+        if (!isspace((unsigned char)raw[i])) {
+            temp[j++] = (char)toupper((unsigned char)raw[i]);
+        }
+    }
+    temp[j] = '\0';
+
+    char* arrow = strstr(temp, "->");
+    if (!arrow) {
+        setMessage(board, "Illegal move: missing \"->\"");
+        return 0;
+    }
+    *arrow = '\0';
+    const char* lhs = temp;
+    const char* rhs = arrow + 2;
+
+    parsedMove mv = {0};
+
+    if (*lhs == 'C') {
+        lhs++;
+        int col = parseNumber(lhs, &lhs);
+        if (col < 1 || col > 7) {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+        Column* c = nthColumn(board, col);
+        if (!c || c->head->next == c->tail) {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+        mv.srcColumn = c;
+
+        if (*lhs == ':') {
+            if (strchr(ranks, lhs[1]) && strchr(suits, lhs[2]) && lhs[3] == '\0') {
+                char id[3] = {lhs[1], lhs[2], '\0'};
+                cardLocation loc = locateSpecificCard(board, id);
+                if (!loc.card || loc.col != col) {
+                    setMessage(board, "Invalid move");
+                    return 0;
+                }
+                mv.sourceKind = srcColumnCard;
+                mv.srcCard = loc.card;
+            } else {
+                setMessage(board, "Invalid move");
+                return 0;
+            }
+        } else if (*lhs == '\0') {
+            mv.sourceKind = srcColumnBottom;
+            mv.srcCard = c->tail->prev;
+        } else {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+    } else if (*lhs == 'F') {
+        lhs++;
+        int fn = parseNumber(lhs, &lhs);
+        if (fn < 1 || fn > 4 || *lhs == '\0') {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+        Foundation* f = nthFoundation(board, fn);
+        if (!f || f->head->next == f->tail) {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+        mv.sourceKind = srcFoundationTop;
+        mv.srcFoundation = f;
+        mv.srcCard = f->tail->prev;
+    } else {
+        setMessage(board, "Invalid move");
+        return 0;
+    }
+
+    if (*rhs == 'C') {
+        rhs++;
+        int col = parseNumber(rhs, &rhs);
+        if (col < 1 || col > 7 || *rhs != '\0') {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+        Column* c = nthColumn(board, col);
+        mv.destinationKind = dstColumnBottom;
+        mv.dstColumn = c;
+    } else if (*rhs == 'F') {
+        rhs++;
+        int fn = parseNumber(rhs, &rhs);
+        if (fn < 1 || fn > 4 || *rhs != '\0') {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+        Foundation* f = nthFoundation(board, fn);
+        mv.destinationKind = dstFoundationTop;
+        mv.dstFoundation = f;
+    } else {
+        setMessage(board, "Invalid move");
+        return 0;
+    }
+    *out = mv;
+    return 1;
+}
+
+int rankIdx(const char r) {
+    const char* rankStr = "A23456789TJQK";
+    const char* p = strchr(rankStr, r);
+    return p ? (int)(p-rankStr) : -1;
+}
+
+int isValidDescendingRun(const Column* col, const Card* card) {
+    while (card->next != col->tail) {
+        const Card* below = card->next;
+        int r1 = rankIdx(card->rank), r2 = rankIdx(below->rank);
+        if (r1 != r2+1) {
+            return 0;
+        }
+        if (card->suit == below->suit) {
+            return 0;
+        }
+        card = below;
+    }
+    return 1;
+}
+
+Card* columnBottom(const Column* col) {
+    return (col->head->next == col->tail) ? NULL : col->tail->prev;
+}
+Card* foundationTop(const Foundation* f) {
+    return (f->head->next == f->tail) ? NULL : f->tail->prev;
+}
+
+int isMoveLegal(Board* board, const parsedMove* mv) {
+    if (mv->sourceKind == srcColumnCard && !isValidDescendingRun(mv->srcColumn, mv->srcCard)) {
+        setMessage(board, "Invalid move");
+        return 0;
+    }
+    if (mv->destinationKind == dstColumnBottom) {
+        Card* dstBot = columnBottom(mv->dstColumn);
+
+        if (dstBot) {
+            int srcRank = rankIdx(mv->srcCard->rank);
+            int destRank = rankIdx(dstBot->rank);
+            if (srcRank != destRank - 1 || mv->srcCard->suit == dstBot->suit) {
+                setMessage(board, "Invalid move");
+                return 0;
+            }
+        }
+        return 1;
+    }
+    if (mv->destinationKind == dstFoundationTop) {
+        if (mv->sourceKind != srcColumnBottom) {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+        Card* top = foundationTop(mv->dstFoundation);
+
+        if (top && top->suit != mv->srcCard->suit) {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+
+        int sourceRank = rankIdx(mv->srcCard->rank);
+        int refRank = top ? rankIdx(top->rank) + 1 : 0;
+        if (sourceRank != refRank) {
+            setMessage(board, "Invalid move");
+            return 0;
+        }
+        return 1;
+    }
+    setMessage(board, "Invalid move");
+    return 0;
+}
+
+void exposeNewBot(Column* col) {
+    if (col->head->next != col->tail) {
+        col->tail->prev->faceUp = true;
+    }
+}
+
+void attachStackBefore(Card* first, Card* last, Card* before) {
+    last->next = before;
+    first->prev = before->prev;
+    before->prev->next = first;
+    before->prev = last;
+}
+
+void gameMove(Board* board, const parsedMove* mv) {
+    Card* first = mv->srcCard;
+    Card* last = first;
+
+    if (mv->sourceKind == srcColumnCard) {
+        while (last->next != mv->srcColumn->tail) {
+            last = last->next;
+        }
+    }
+    Card* before = first->prev;
+    Card* after = last->next;
+    before->next = after;
+    after->prev = before;
+
+    if (mv->destinationKind == dstColumnBottom) {
+        attachStackBefore(first, last, mv->dstColumn->tail);
+    } else {
+        attachStackBefore(first, last, mv->dstFoundation->tail);
+    }
+
+    if (mv->sourceKind != srcFoundationTop) {
+        exposeNewBot(mv->srcColumn);
+    }
+
+    setMessage(board, "OK");
+}
+
 
 void showAll(const Board* board) {
     if (boardHasCard(board)) {
@@ -564,7 +827,7 @@ void displayBoard(const Board* board, char* lastCommand) {
     printf("INPUT > ");
 }
 
-void commandCenter(Board* board, char* input) {
+void commandCenter(Board* board, const char* input) {
 
     char copy[128];
     char saved[128];
@@ -639,7 +902,6 @@ void commandCenter(Board* board, char* input) {
             printf("%s\n\n", rest);
             saveDeck(board, rest);
         }
-
     }
     if (strcmp(cmd, "P") == 0) {
         if (board->playing) {
@@ -649,11 +911,9 @@ void commandCenter(Board* board, char* input) {
             board->playing = true;
         }
     }
-
     if (strcmp(cmd, "QQ") == 0) {
         exitProgram(board);
-    }
-    if (strcmp(cmd, "Q") == 0) {
+    } else if (strcmp(cmd, "Q") == 0) {
         if (board->playing) {
             Card* deck[52] = {NULL};
             flattenBoard(board, deck);
@@ -663,6 +923,19 @@ void commandCenter(Board* board, char* input) {
         } else {
             setMessage(board, "Command not available in the STARTUP phase.");
         }
+    }
+    if (strchr(copy, '-') && strstr(copy, "->")) {
+        if (board->playing) {
+            parsedMove mv;
+            if (parsedMoveCommand(board, saved, &mv)) {
+                if (isMoveLegal(board, &mv)) {
+                    gameMove(board, &mv);
+                }
+            }
+        } else {
+            setMessage(board, "Command not available in the STARTUP phase");
+        }
+
     }
 
     lastCommand = saved;
