@@ -776,7 +776,7 @@ void displayBoardState(const Board* board) {
         maxRows = 7;
     }
 
-    printf("c1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
+    printf("C1\tC2\tC3\tC4\tC5\tC6\tC7\n\n");
     for (int row = 0; row < maxRows; ++row) {
         for (const Column* col = board->head->next; col != board->tail; col = col->next) {
             const Card* card = col->head->next;
