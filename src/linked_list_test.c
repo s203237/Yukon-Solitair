@@ -30,6 +30,7 @@ typedef struct {
 
     char msg[256];
     bool playing;
+    bool GUI;
 }Board;
 
 typedef struct {
@@ -378,6 +379,34 @@ cardLocation locateSpecificCard(const Board* board, const char* id) {
     }
 
     return result;
+}
+
+void saveBoardState(const Board* board) {
+    FILE* file = fopen("trustThisIsASocket.txt", "w");
+    for (int i = 1; i <= 7; ++i) {
+        Column* col = nthColumn(board, i);
+        for (Card *c = col->head->next; c != col->tail; c = c->next) {
+            if (c->faceUp)
+                fprintf(file, "[%c%c]", c->rank, c->suit);
+            else
+                fprintf(file, "[]");
+            if (c->next != col->tail) {
+                fputc(' ', file);
+            }
+        }
+        fputc('\n', file);
+    }
+    for (int i = 1; i <= 4; ++i) {
+        Foundation *f = nthFoundation(board, i);
+
+        if (f->tail->prev != f->head) {
+            fprintf(file, "[%c%c]", f->tail->prev->rank, f->tail->prev->suit);
+        } else {
+            fprintf(file, "[]");
+        }
+        fputc('\n', file);
+    }
+    fclose(file);
 }
 
 int parsedMoveCommand (const Board* board, const char* raw, parsedMove* out) {
@@ -911,6 +940,10 @@ void commandCenter(Board* board, const char* input) {
             board->playing = true;
         }
     }
+    if (strcmp(cmd, "GUI") == 0) {
+        if (board->GUI == false) board->GUI = true;
+        else board->GUI = false;
+    }
     if (strcmp(cmd, "QQ") == 0) {
         exitProgram(board);
     } else if (strcmp(cmd, "Q") == 0) {
@@ -935,7 +968,6 @@ void commandCenter(Board* board, const char* input) {
         } else {
             setMessage(board, "Command not available in the STARTUP phase");
         }
-
     }
 
     lastCommand = saved;
