@@ -4,24 +4,18 @@
 
 //create new card
 Card* createCard(char rank, char suit, bool faceUp){
-    Card*newCard = (Card*)malloc(sizeof(Card));
+    Card* newCard = (Card*)malloc(sizeof(Card));
     if(!newCard)return NULL;
     newCard ->rank = rank;
     newCard ->suit =suit;
     newCard -> faceUp =faceUp;
-    newCard -> next =NULL;
+    newCard -> next = NULL;
+    newCard -> prev = NULL;
     return newCard;
 }
-//free the entire linked list
-void freeCardList(Card*head){
-    while(head){
-        Card*temp =head;
-        head =head->next;
-        free(temp);
-    }
-}
+
 // print card in terminal
-void printCard(const Card*card){
+void printCard(const Card* card){
     if(card ==NULL){
         printf("\t");
     }else if (card ->faceUp){
