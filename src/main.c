@@ -9,12 +9,14 @@
 
 
 int main() {
-    initGame();
-    printBoard();
+    Board*board = initBoard();
+    Card* deck = NULL;
+    printBoard(board);
     char input[100];// save user input command
     char lastCommand[100] = "";//display previous command
     char message[100] = "Welcome to Yukon!"; //notify execution result
     bool inPlayPhase = false;
+    
 
     while (1) {
         printf("\nLAST Command: %s\n", lastCommand);
@@ -26,36 +28,36 @@ int main() {
 
         if (strncmp(input, "LD ", 3) == 0) {
             if (loadDeckFromFile(input + 3)) {
-                dealCards();
+                dealDeckForGridView(board,deck);
                 strcpy(message, "Deck loaded successfully.");
-                printBoard();
+                printBoard(board);
             } else {
                 strcpy(message, "Error loading deck.");
             }
         } else if (strcmp(input, "SW") == 0) {
-            showAllCards();
+            showAllCards(board);
             strcpy(message, "Showing all cards.");
-            printBoard();
+            printBoard(board);
        
         }else if (strncmp(input, "SI", 3) == 0) {
                 if (inPlayPhase) strcpy(message, "Command not available in PLAY phase.");
                 else {
                     int split = atoi(input + 3);
-                    shuffleDeckSplit(split);
+                    shuffleDeckSplit(deck,split);
                     strcpy(message, "Deck split-shuffled.");
                 }
         }else if (strcmp(input, "SR") == 0) {
                 if (inPlayPhase) strcpy(message, "Command not available in PLAY phase.");
                 else {
-                    shuffleDeckRandom();
-                    dealCards(); 
-                    printBoard();
+                    shuffleDeckRandom(deck);
+                    dealCardsForPlayPhase(board,deck); 
+                    printBoard(board);
                     strcpy(message, "Deck shuffled randomly.");
                 }
         } else if (strcmp(input, "P") == 0) {
-            dealCards();
+            dealCardsForPlayPhase(board,deck); 
             inPlayPhase = true;
-            printBoard();
+            printBoard(board);
             strcpy(message, "Cards dealt to columns.");
         } else if (strcmp(input, "QQ") == 0) {
             printf("Bye!\n");

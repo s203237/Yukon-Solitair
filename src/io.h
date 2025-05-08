@@ -2,11 +2,14 @@
 #define IO_H
 #include "card.h"
 #include <stdio.h>
+#include "board.h"
 
 
-bool loadDeckFromFile(const char* filename);
-void printBoard();
+Card* loadDeckFromFile(const char* filename);
 void printMessage( const char* msg);
 void saveList(FILE*file, Card*head);
-void saveGameToFile(const char* filename);
+void saveGameToFile(Board* board, Card* deck, const char* filename);
+void printBoard(Board* board);
+char* getBoardString(Board* board);
+
 #endif

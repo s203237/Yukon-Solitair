@@ -8,39 +8,13 @@
 #include "card.h"
 #include "io.h"
 #include "utils.h" 
+#include "board.h"
 
-typedef struct column{
-    Card* head;
-    Card* tail;
-    struct  column*next;
-    struct column*prev;
-    }Column;
-typedef struct foundation{
-    Card*head;
-    Card*tail;
-    struct foundation*next;
-    struct foundation*prev;
-}Foundation;
-typedef struct head{
-    Card*head;
-    Card*tail;
-    Foundation*foundationHead;
-    Foundation*foundationTail;
-}Board;
 
-    
+Card* globalDeck = NULL;
 
-// void initGame(){
-//     for(int i=0; i<NUM_COLUMNS;i++) {
-//         columns[i]=NULL;
-//     }
-//     for(int i=0; i<NUM_FOUNDATIONS;i++) {
-//        // foundations[0]=createCard('A','s',true); //TEST
-//        foundations[i]=NULL;
-//     }
-//     deck =NULL;
 
-// }
+  
 Board* initBoard() {
     Board* gameBoard = malloc(sizeof(Board));
 
@@ -103,20 +77,6 @@ void showAllCards(Board*board) {
         }
     }
 }
-// void showDeck(){
-//     Card* current = deck;
-//     while(current != NULL){
-//       if(current -> faceUp) {
-//         printf("%c%c", current -> rank, current -> suit); // prints faceUp cards
-//         } else {
-//           printf("[] "); // prints faceDown cards
-//     }
-//     current = current -> next;
-//     }
-//     printf("\n");
-  
-//   }
-
 
 void dealCardsForPlayPhase(Board* board, Card* deck) {
     Column* col = board->head->next;
@@ -174,13 +134,11 @@ void dealDeckForGridView(Board* board, Card* deck) {
 }
 
 
-void shuffleDeckSplit(Card** deck, int split){
-  if(!deck ||!(*deck)|| split <= 0) return;
+void shuffleDeckSplit(Card* deck, int split){
+  if(!deck || split <= 0) return;
 
-  //Split the deck into two parts
-  Card* firstHalf = deck;
-  Card* secondHalf = NULL;
-  Card* current = *deck;
+  //Split 
+  Card* current = deck;
   Card* prev = NULL;
 
   int count = 0;
@@ -190,174 +148,77 @@ void shuffleDeckSplit(Card** deck, int split){
     count++;
   }
 
-  if (prev) {
+  if (!prev) return;
     prev->next = NULL;
-    if (current) current->prev = NULL;
-    secondHalf = current;
-}
-    secondHalf = current;
+    Card* firstHalf = deck;
+    Card* secondHalf = current;
 
     //Interleave cards from both hslves
     Card* shuffled = NULL;
     Card** tail = &shuffled;
 
-    while(firstHalf || secondHalf){
-      if(firstHalf){
-        if (!shuffled) {
-            shuffled = firstHalf;
-            tail = firstHalf;
-        } else {
-            tail->next = firstHalf;
-            firstHalf->prev = tail;
-            tail = firstHalf;
+    while (firstHalf || secondHalf) {
+        if (firstHalf) {
+            *tail = firstHalf;
+            firstHalf = firstHalf->next;
+            tail = &((*tail)->next);
         }
-        firstHalf = firstHalf->next;
-    }
-
-    if (secondHalf) {
-        if (!shuffled) {
-            shuffled = secondHalf;
-            tail = secondHalf;
-        } else {
-            tail->next = secondHalf;
-            secondHalf->prev = tail;
-            tail = secondHalf;
+        if (secondHalf) {
+            *tail = secondHalf;
+            secondHalf = secondHalf->next;
+            tail = &((*tail)->next);
         }
-        secondHalf = secondHalf->next;
     }
-}
+    *tail = NULL;
 
-if (tail) tail->next = NULL;
-    deck = shuffled;
+    extern Card* globalDeck;
+    globalDeck = shuffled;
 }
 
 
 
-// to move a card from fromCol to toCol
-// void moveCard(int fromCol, char rank, char suit, int toCol ) {
-//     if(fromCol<0|| fromCol>= NUM_COLUMNS ||toCol>=NUM_COLUMNS) {
-//         printf("Invalid column index.\n");
-//         return;
-//     }
-//     Card* src = columns[fromCol];
-//     Card*prev =NULL;
-//     // find a card to move
-//     while(src&& (src-> rank !=rank|| src -> suit!=suit|| !src->faceUp)){
-//     prev =src;
-//     src =src->next;
-//     }
-//     if(!src)return; //Not found 
-//     // if there is  prev -> stop at src
-//     if(prev){
-//         prev ->next =NULL;
-//     }else {
-//         columns[fromCol] =NULL;
-//     }
-//     //find the tail
-//     Card*tail =src;
-//     while(tail->next)tail =tail->next;
-//     // add toCol
-//     if (!columns[toCol]) {
-//         if (rank != 'K') {
-//             printf("Only King can be moved to empty column.\n");
-//             if (prev) prev->next = src;
-//             else columns[fromCol] = src;
-//             return;
-//         }
-//         columns[toCol] = src;
-//     }else {
-//         Card*dest = columns[toCol];
-//         while(dest->next) dest =dest->next;
-//         // check: can it be connected?
-//         if (!isValidMove(src, dest)) {
-//             printf("Invalid move: doesn't follow Yukon rules.\n");
-//             if (prev) prev->next = src;
-//             else columns[fromCol] = src;
-//             return;
-//         }
-//         dest->next = src;
-//     }
-
-
-// }
-
-void printBoard(Board* board) {
-    // Prints columns title C1 - C7.
-    for (int i = 1; i <= 7; i++) printf("C%d\t", i);
-    printf("\n\n");
-
-    // Find maxim number of cards in columns
-    int maxRows = 0;
-    for (Column* col = board->head->next; col != board->tail; col = col->next) {
-        int count = 0;
-        for (Card* c = col->head->next; c != col->tail; c = c->next) count++;
-        if (count > maxRows) maxRows = count;
-    }
-
-    // Print each line
-    for (int row = 0; row < maxRows; row++) {
-        Column* col = board->head->next;
-        while (col != board->tail) {
-            Card* c = col->head->next;
-            for (int i = 0; i < row && c != col->tail; i++) c = c->next;
-            if (c != col->tail)
-                printf(c->faceUp ? "%c%c\t" : "[]\t", c->rank, c->suit);
-            else
-                printf("\t");
-            col = col->next;
-        }
-        printf("\n");
-    }
-
-    // In Foundation
-    printf("\n");
-    Foundation* f = board->foundationHead->next;
-    for (int i = 1; f != board->foundationTail; f = f->next, i++) {
-        Card* top = f->tail->prev;
-        if (top != f->head) {
-            printf("[%c%c] F%d\t", top->rank, top->suit, i);
-        } else {
-            printf("[] F%d\t", i);
-        }
-
-    }
-    printf("\n");
-}
-    char* getBoardString() {
-        static char buffer[2048];
-        buffer[0] = '\0';  //
-
-        // Columns
-        for (int col = 0; col < NUM_COLUMNS; col++) {
-            Card* card = columns[col];
-            while (card) {
-                if (card->faceUp) {
-                    char cardStr[4];
-                    snprintf(cardStr, sizeof(cardStr), "%c%c ", card->rank, card->suit);
-                    strcat(buffer, cardStr);
-                } else {
-                    strcat(buffer, "[] ");
-                }
-                card = card->next;
-            }
-            strcat(buffer, "\n");
-        }
-
-        // Foundations
-        strcat(buffer, "---\n");
-        for (int f = 0; f < NUM_FOUNDATIONS; f++) {
-            if (foundations[f] && foundations[f]->faceUp) {
-                char fStr[4];
-                snprintf(fStr, sizeof(fStr), "%c%c ", foundations[f]->rank, foundations[f]->suit);
-                strcat(buffer, fStr);
+    void shuffleDeckRandom(Card* deck) {
+        if (!deck ) return;
+    
+        // Seed random
+        srand(time(NULL));
+        Card* shuffled = NULL;
+        Card* current = deck;
+    
+        // Loop through each card in the original deck
+        while (current) {
+            Card* next = current->next;
+            current->next = NULL;
+    
+            // Calculate the length of the current shuffled
+            int length = 0;
+            for (Card* temp = shuffled; temp; temp = temp->next) length++;
+    
+            // Select random location
+            int pos = (length == 0) ? 0 : rand() % (length + 1);
+    
+            if (pos == 0) {
+                // Insert head
+                current->next = shuffled;
+                shuffled = current;
             } else {
-                strcat(buffer, "__ ");
+                // Insert middle or end
+                Card* prev = shuffled;
+                for (int i = 1; i < pos; i++) prev = prev->next;
+                current->next = prev->next;
+                prev->next = current;
             }
+    
+            current = next;
         }
-        strcat(buffer, "\n");
-
-        return buffer;
+    
+        extern Card* globalDeck;
+    globalDeck = shuffled; 
     }
+    
+
+
+
 
 
 
