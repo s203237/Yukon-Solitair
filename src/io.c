@@ -104,7 +104,9 @@ void printBoard(Board* board) {
             printf("[] F%d\t", i);
         }
 
-    }
+    }git add .
+git commit -m "Finish previous merge"
+
     printf("\n");
 }
 char* getBoardString(Board* board) {

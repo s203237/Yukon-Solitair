@@ -11,9 +11,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/card.c" "CMakeFiles/Yukon_Solitair.dir/src/card.c.o" "gcc" "CMakeFiles/Yukon_Solitair.dir/src/card.c.o.d"
   "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/game.c" "CMakeFiles/Yukon_Solitair.dir/src/game.c.o" "gcc" "CMakeFiles/Yukon_Solitair.dir/src/game.c.o.d"
   "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/io.c" "CMakeFiles/Yukon_Solitair.dir/src/io.c.o" "gcc" "CMakeFiles/Yukon_Solitair.dir/src/io.c.o.d"
-  "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/main.c" "CMakeFiles/Yukon_Solitair.dir/src/main.c.o" "gcc" "CMakeFiles/Yukon_Solitair.dir/src/main.c.o.d"
+  "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/server.c" "CMakeFiles/Yukon_Solitair.dir/src/server.c.o" "gcc" "CMakeFiles/Yukon_Solitair.dir/src/server.c.o.d"
   "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/utils.c" "CMakeFiles/Yukon_Solitair.dir/src/utils.c.o" "gcc" "CMakeFiles/Yukon_Solitair.dir/src/utils.c.o.d"
-  "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/yokon.dSYM/server.c" "CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o" "gcc" "CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

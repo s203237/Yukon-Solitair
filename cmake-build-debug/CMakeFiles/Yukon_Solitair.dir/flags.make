@@ -4,7 +4,7 @@
 # compile C with /Library/Developer/CommandLineTools/usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I"/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/." -I"/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src" -I"/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/gui_py"
+C_INCLUDES = -I"/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src"
 
 C_FLAGSarm64 = -g -std=gnu11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -fcolor-diagnostics
 

@@ -72,19 +72,19 @@ include CMakeFiles/Yukon_Solitair.dir/flags.make
 CMakeFiles/Yukon_Solitair.dir/codegen:
 .PHONY : CMakeFiles/Yukon_Solitair.dir/codegen
 
-CMakeFiles/Yukon_Solitair.dir/src/card.c.o: CMakeFiles/Yukon_Solitair.dir/flags.make
-CMakeFiles/Yukon_Solitair.dir/src/card.c.o: /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/card.c
-CMakeFiles/Yukon_Solitair.dir/src/card.c.o: CMakeFiles/Yukon_Solitair.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Yukon_Solitair.dir/src/card.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Yukon_Solitair.dir/src/card.c.o -MF CMakeFiles/Yukon_Solitair.dir/src/card.c.o.d -o CMakeFiles/Yukon_Solitair.dir/src/card.c.o -c "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/card.c"
+CMakeFiles/Yukon_Solitair.dir/src/server.c.o: CMakeFiles/Yukon_Solitair.dir/flags.make
+CMakeFiles/Yukon_Solitair.dir/src/server.c.o: /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/server.c
+CMakeFiles/Yukon_Solitair.dir/src/server.c.o: CMakeFiles/Yukon_Solitair.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Yukon_Solitair.dir/src/server.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Yukon_Solitair.dir/src/server.c.o -MF CMakeFiles/Yukon_Solitair.dir/src/server.c.o.d -o CMakeFiles/Yukon_Solitair.dir/src/server.c.o -c "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/server.c"
 
-CMakeFiles/Yukon_Solitair.dir/src/card.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Yukon_Solitair.dir/src/card.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/card.c" > CMakeFiles/Yukon_Solitair.dir/src/card.c.i
+CMakeFiles/Yukon_Solitair.dir/src/server.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Yukon_Solitair.dir/src/server.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/server.c" > CMakeFiles/Yukon_Solitair.dir/src/server.c.i
 
-CMakeFiles/Yukon_Solitair.dir/src/card.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Yukon_Solitair.dir/src/card.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/card.c" -o CMakeFiles/Yukon_Solitair.dir/src/card.c.s
+CMakeFiles/Yukon_Solitair.dir/src/server.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Yukon_Solitair.dir/src/server.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/server.c" -o CMakeFiles/Yukon_Solitair.dir/src/server.c.s
 
 CMakeFiles/Yukon_Solitair.dir/src/game.c.o: CMakeFiles/Yukon_Solitair.dir/flags.make
 CMakeFiles/Yukon_Solitair.dir/src/game.c.o: /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/game.c
@@ -100,10 +100,24 @@ CMakeFiles/Yukon_Solitair.dir/src/game.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Yukon_Solitair.dir/src/game.c.s"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/game.c" -o CMakeFiles/Yukon_Solitair.dir/src/game.c.s
 
+CMakeFiles/Yukon_Solitair.dir/src/card.c.o: CMakeFiles/Yukon_Solitair.dir/flags.make
+CMakeFiles/Yukon_Solitair.dir/src/card.c.o: /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/card.c
+CMakeFiles/Yukon_Solitair.dir/src/card.c.o: CMakeFiles/Yukon_Solitair.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Yukon_Solitair.dir/src/card.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Yukon_Solitair.dir/src/card.c.o -MF CMakeFiles/Yukon_Solitair.dir/src/card.c.o.d -o CMakeFiles/Yukon_Solitair.dir/src/card.c.o -c "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/card.c"
+
+CMakeFiles/Yukon_Solitair.dir/src/card.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Yukon_Solitair.dir/src/card.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/card.c" > CMakeFiles/Yukon_Solitair.dir/src/card.c.i
+
+CMakeFiles/Yukon_Solitair.dir/src/card.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Yukon_Solitair.dir/src/card.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/card.c" -o CMakeFiles/Yukon_Solitair.dir/src/card.c.s
+
 CMakeFiles/Yukon_Solitair.dir/src/io.c.o: CMakeFiles/Yukon_Solitair.dir/flags.make
 CMakeFiles/Yukon_Solitair.dir/src/io.c.o: /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/io.c
 CMakeFiles/Yukon_Solitair.dir/src/io.c.o: CMakeFiles/Yukon_Solitair.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Yukon_Solitair.dir/src/io.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Yukon_Solitair.dir/src/io.c.o"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Yukon_Solitair.dir/src/io.c.o -MF CMakeFiles/Yukon_Solitair.dir/src/io.c.o.d -o CMakeFiles/Yukon_Solitair.dir/src/io.c.o -c "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/io.c"
 
 CMakeFiles/Yukon_Solitair.dir/src/io.c.i: cmake_force
@@ -113,20 +127,6 @@ CMakeFiles/Yukon_Solitair.dir/src/io.c.i: cmake_force
 CMakeFiles/Yukon_Solitair.dir/src/io.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Yukon_Solitair.dir/src/io.c.s"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/io.c" -o CMakeFiles/Yukon_Solitair.dir/src/io.c.s
-
-CMakeFiles/Yukon_Solitair.dir/src/main.c.o: CMakeFiles/Yukon_Solitair.dir/flags.make
-CMakeFiles/Yukon_Solitair.dir/src/main.c.o: /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/main.c
-CMakeFiles/Yukon_Solitair.dir/src/main.c.o: CMakeFiles/Yukon_Solitair.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Yukon_Solitair.dir/src/main.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Yukon_Solitair.dir/src/main.c.o -MF CMakeFiles/Yukon_Solitair.dir/src/main.c.o.d -o CMakeFiles/Yukon_Solitair.dir/src/main.c.o -c "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/main.c"
-
-CMakeFiles/Yukon_Solitair.dir/src/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Yukon_Solitair.dir/src/main.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/main.c" > CMakeFiles/Yukon_Solitair.dir/src/main.c.i
-
-CMakeFiles/Yukon_Solitair.dir/src/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Yukon_Solitair.dir/src/main.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/main.c" -o CMakeFiles/Yukon_Solitair.dir/src/main.c.s
 
 CMakeFiles/Yukon_Solitair.dir/src/utils.c.o: CMakeFiles/Yukon_Solitair.dir/flags.make
 CMakeFiles/Yukon_Solitair.dir/src/utils.c.o: /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/utils.c
@@ -142,41 +142,25 @@ CMakeFiles/Yukon_Solitair.dir/src/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Yukon_Solitair.dir/src/utils.c.s"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/utils.c" -o CMakeFiles/Yukon_Solitair.dir/src/utils.c.s
 
-CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o: CMakeFiles/Yukon_Solitair.dir/flags.make
-CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o: /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/yokon.dSYM/server.c
-CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o: CMakeFiles/Yukon_Solitair.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o -MF CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o.d -o CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o -c "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/yokon.dSYM/server.c"
-
-CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/yokon.dSYM/server.c" > CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.i
-
-CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/src/yokon.dSYM/server.c" -o CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.s
-
 # Object files for target Yukon_Solitair
 Yukon_Solitair_OBJECTS = \
-"CMakeFiles/Yukon_Solitair.dir/src/card.c.o" \
+"CMakeFiles/Yukon_Solitair.dir/src/server.c.o" \
 "CMakeFiles/Yukon_Solitair.dir/src/game.c.o" \
+"CMakeFiles/Yukon_Solitair.dir/src/card.c.o" \
 "CMakeFiles/Yukon_Solitair.dir/src/io.c.o" \
-"CMakeFiles/Yukon_Solitair.dir/src/main.c.o" \
-"CMakeFiles/Yukon_Solitair.dir/src/utils.c.o" \
-"CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o"
+"CMakeFiles/Yukon_Solitair.dir/src/utils.c.o"
 
 # External object files for target Yukon_Solitair
 Yukon_Solitair_EXTERNAL_OBJECTS =
 
-Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/src/card.c.o
+Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/src/server.c.o
 Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/src/game.c.o
+Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/src/card.c.o
 Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/src/io.c.o
-Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/src/main.c.o
 Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/src/utils.c.o
-Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/src/yokon.dSYM/server.c.o
 Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/build.make
 Yukon_Solitair: CMakeFiles/Yukon_Solitair.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable Yukon_Solitair"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/irynalutsyk/Desktop/DTU /2 semester/02322 Machine oriented programming/Projekt 2/Yukon-Solitair/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable Yukon_Solitair"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Yukon_Solitair.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

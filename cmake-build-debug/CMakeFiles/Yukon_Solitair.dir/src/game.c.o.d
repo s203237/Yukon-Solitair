@@ -93,6 +93,11 @@ CMakeFiles/Yukon_Solitair.dir/src/game.c.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_strings.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_string.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/time.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_time.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_clock_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_time_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_timespec.h \
   /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/game.h \
   /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/card.h \
   /Users/irynalutsyk/Desktop/DTU\ /2\ semester/02322\ Machine\ oriented\ programming/Projekt\ 2/Yukon-Solitair/src/io.h \
